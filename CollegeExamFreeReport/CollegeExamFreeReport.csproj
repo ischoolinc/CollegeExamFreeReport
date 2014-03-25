@@ -62,6 +62,10 @@
       <HintPath>library\JHSchool.Data.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="K12.BusinessLogic">
+      <HintPath>library\K12.BusinessLogic.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="K12.Data">
       <HintPath>library\K12.Data.dll</HintPath>
       <Private>False</Private>

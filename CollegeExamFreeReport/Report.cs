@@ -4,6 +4,7 @@ using FISCA.Presentation;
 using FISCA.Presentation.Controls;
 using FISCA.UDT;
 using JHSchool.Data;
+using K12.BusinessLogic;
 using K12.Data;
 using System;
 using System.Collections.Generic;
@@ -93,6 +94,7 @@ namespace CollegeExamFreeReport
 
             EnableForm(true);
             Document doc = (Document)e.Result;
+            doc.MailMerge.DeleteFields();
             SaveFileDialog sd = new SaveFileDialog();
             sd.Title = "另存新檔";
             sd.FileName = Global.ReportName + ".doc";
@@ -151,7 +153,7 @@ namespace CollegeExamFreeReport
 
             _BW.ReportProgress(20);
             //基本資料
-            DataTable dt = _Q.Select("SELECT student.id,student.name,student.id_number,class.class_name FROM student LEFT JOIN class ON ref_class_id = class.id WHERE student.id IN ('" + ids + "')");
+            DataTable dt = _Q.Select("SELECT student.id,student.name,student.id_number,class.class_name,student.seat_no,student.student_number FROM student LEFT JOIN class ON ref_class_id = class.id WHERE student.id IN ('" + ids + "')");
             foreach (DataRow row in dt.Rows)
             {
                 StudentObj obj = new StudentObj(row);
@@ -212,23 +214,37 @@ namespace CollegeExamFreeReport
 
             _BW.ReportProgress(50);
             //獎懲紀錄
-            List<DisciplineRecord> records = Discipline.SelectByStudentIDs(students);
-            foreach (DisciplineRecord record in records)
+            List<AutoSummaryRecord> records = AutoSummary.Select(students, null);
+            foreach (AutoSummaryRecord record in records)
             {
                 string id = record.RefStudentID;
                 if (studentDic.ContainsKey(id))
                 {
-                    studentDic[id].MeritA += record.MeritA.HasValue ? record.MeritA.Value : 0;
-                    studentDic[id].MeritB += record.MeritB.HasValue ? record.MeritB.Value : 0;
-                    studentDic[id].MeritC += record.MeritC.HasValue ? record.MeritC.Value : 0;
-                    if (record.Cleared != "是")
-                    {
-                        studentDic[id].DemeritA += record.DemeritA.HasValue ? record.DemeritA.Value : 0;
-                        studentDic[id].DemeritB += record.DemeritB.HasValue ? record.DemeritB.Value : 0;
-                        studentDic[id].DemeritC += record.DemeritC.HasValue ? record.DemeritC.Value : 0;
-                    }
+                    studentDic[id].MeritA += record.MeritA;
+                    studentDic[id].MeritB += record.MeritB;
+                    studentDic[id].MeritC += record.MeritC;
+                    studentDic[id].DemeritA += record.DemeritA;
+                    studentDic[id].DemeritB += record.DemeritB;
+                    studentDic[id].DemeritC += record.DemeritC;
                 }
             }
+            //List<DisciplineRecord> records = Discipline.SelectByStudentIDs(students);
+            //foreach (DisciplineRecord record in records)
+            //{
+            //    string id = record.RefStudentID;
+            //    if (studentDic.ContainsKey(id))
+            //    {
+            //        studentDic[id].MeritA += record.MeritA.HasValue ? record.MeritA.Value : 0;
+            //        studentDic[id].MeritB += record.MeritB.HasValue ? record.MeritB.Value : 0;
+            //        studentDic[id].MeritC += record.MeritC.HasValue ? record.MeritC.Value : 0;
+            //        if (record.Cleared != "是")
+            //        {
+            //            studentDic[id].DemeritA += record.DemeritA.HasValue ? record.DemeritA.Value : 0;
+            //            studentDic[id].DemeritB += record.DemeritB.HasValue ? record.DemeritB.Value : 0;
+            //            studentDic[id].DemeritC += record.DemeritC.HasValue ? record.DemeritC.Value : 0;
+            //        }
+            //    }
+            //}
 
             //取得功過換算比例
             MeritDemeritReduceRecord mdrr = MeritDemeritReduce.Select();
@@ -351,6 +367,10 @@ namespace CollegeExamFreeReport
                 }
             }
 
+            //排序
+            List<StudentObj> list = studentDic.Values.ToList();
+            list.Sort(SortStudent);
+
             int progress = 80;
             decimal per = (decimal)(100-progress) / studentDic.Count;
             int count = 0;
@@ -384,7 +404,10 @@ namespace CollegeExamFreeReport
             data.Columns.Add("弱勢身分");
             data.Columns.Add("弱勢身分_總");
             data.Columns.Add("均衡學習_總");
-            foreach (StudentObj obj in studentDic.Values)
+            data.Columns.Add("服務學習_總");
+            data.Columns.Add("表現評量_總");
+            data.Columns.Add("體適能_總");
+            foreach (StudentObj obj in list)
             {
                 DataRow row = data.NewRow();
                 row["學校名稱"] = _SchoolName;
@@ -420,6 +443,9 @@ namespace CollegeExamFreeReport
 
                 row["弱勢身分_總"] = row["弱勢身分"].ToString();
                 row["均衡學習_總"] = row["均衡學習"].ToString();
+                row["服務學習_總"] = row["服務學習"].ToString();
+                row["表現評量_總"] = row["表現評量"].ToString();
+                row["體適能_總"] = row["體適能"].ToString();
                 data.Rows.Add(row);
 
                 count++;
@@ -431,6 +457,19 @@ namespace CollegeExamFreeReport
             doc.MailMerge.Execute(data);
 
             e.Result = doc;
+        }
+
+        private int SortStudent(StudentObj x, StudentObj y)
+        {
+            string xx = x.ClassName.PadLeft(20, '0');
+            xx += x.SeatNo.PadLeft(3, '0');
+            xx += x.StudentNumber.PadLeft(20, '0');
+
+            string yy = y.ClassName.PadLeft(20, '0');
+            yy += y.SeatNo.PadLeft(3, '0');
+            yy += y.StudentNumber.PadLeft(20, '0');
+
+            return xx.CompareTo(yy);
         }
 
         private void buttonX1_Click(object sender, EventArgs e)

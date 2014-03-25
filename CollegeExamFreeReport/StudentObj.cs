@@ -9,7 +9,7 @@ namespace CollegeExamFreeReport
 {
     class StudentObj
     {
-        public string Id, Name, ClassName, IdNumber;
+        public string Id, Name, ClassName, IdNumber, SeatNo, StudentNumber;
         public decimal ServiceHours;
         public int CadreTimes;
         //原始獎懲紀錄
@@ -223,6 +223,8 @@ namespace CollegeExamFreeReport
             this.Name = row["name"].ToString();
             this.ClassName = row["class_name"].ToString();
             this.IdNumber = row["id_number"].ToString();
+            this.SeatNo = row["seat_no"].ToString();
+            this.StudentNumber = row["student_number"].ToString();
             this.ServiceHours = 0;
             this.CadreTimes = 0;
             this.MeritA = 0;
