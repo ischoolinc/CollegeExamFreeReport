@@ -404,9 +404,7 @@ namespace CollegeExamFreeReport
             data.Columns.Add("弱勢身分");
             data.Columns.Add("弱勢身分_總");
             data.Columns.Add("均衡學習_總");
-            data.Columns.Add("服務學習_總");
-            data.Columns.Add("表現評量_總");
-            data.Columns.Add("體適能_總");
+            data.Columns.Add("多元學習表現");
             foreach (StudentObj obj in list)
             {
                 DataRow row = data.NewRow();
@@ -443,9 +441,7 @@ namespace CollegeExamFreeReport
 
                 row["弱勢身分_總"] = row["弱勢身分"].ToString();
                 row["均衡學習_總"] = row["均衡學習"].ToString();
-                row["服務學習_總"] = row["服務學習"].ToString();
-                row["表現評量_總"] = row["表現評量"].ToString();
-                row["體適能_總"] = row["體適能"].ToString();
+                row["多元學習表現"] = obj.ServiceHoursScore + obj.MeritDemeritScore + obj.SportFitnessScore;
                 data.Rows.Add(row);
 
                 count++;
