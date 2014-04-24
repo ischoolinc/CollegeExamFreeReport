@@ -25,7 +25,7 @@ namespace CollegeExamFreeReport
         AccessHelper _A = new AccessHelper();
         QueryHelper _Q = new QueryHelper();
         BackgroundWorker _BW;
-        string _SchoolName;
+        string _SchoolName,_SchoolCode;
         Dictionary<String, String> _Column2Items;
         Dictionary<String, List<string>> _MappingData;
 
@@ -35,6 +35,7 @@ namespace CollegeExamFreeReport
             Column1Prepare();
             Column2Prepare();
             _SchoolName = K12.Data.School.ChineseName;
+            _SchoolCode = K12.Data.School.Code;
             _BW = new BackgroundWorker();
             _BW.WorkerReportsProgress = true;
             _BW.DoWork += new DoWorkEventHandler(DataBuilding);
@@ -377,8 +378,10 @@ namespace CollegeExamFreeReport
             //Objects轉DataTable
             DataTable data = new DataTable();
             data.Columns.Add("學校名稱");
+            data.Columns.Add("學校代碼");
             data.Columns.Add("班級");
             data.Columns.Add("姓名");
+            data.Columns.Add("座號");
             data.Columns.Add("身分證字號");
             data.Columns.Add("服務時數");
             data.Columns.Add("幹部紀錄");
@@ -409,8 +412,10 @@ namespace CollegeExamFreeReport
             {
                 DataRow row = data.NewRow();
                 row["學校名稱"] = _SchoolName;
+                row["學校代碼"] = _SchoolCode;
                 row["班級"] = obj.ClassName;
                 row["姓名"] = obj.Name;
+                row["座號"] = obj.SeatNo;
                 row["身分證字號"] = obj.IdNumber;
                 row["服務時數"] = obj.ServiceHours;
                 row["幹部紀錄"] = obj.CadreTimes;
