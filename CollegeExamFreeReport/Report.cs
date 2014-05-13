@@ -382,6 +382,7 @@ namespace CollegeExamFreeReport
             data.Columns.Add("班級");
             data.Columns.Add("姓名");
             data.Columns.Add("座號");
+            data.Columns.Add("學號");
             data.Columns.Add("身分證字號");
             data.Columns.Add("服務時數");
             data.Columns.Add("幹部紀錄");
@@ -416,6 +417,7 @@ namespace CollegeExamFreeReport
                 row["班級"] = obj.ClassName;
                 row["姓名"] = obj.Name;
                 row["座號"] = obj.SeatNo;
+                row["學號"] = obj.StudentNumber;
                 row["身分證字號"] = obj.IdNumber;
                 row["服務時數"] = obj.ServiceHours;
                 row["幹部紀錄"] = obj.CadreTimes;
