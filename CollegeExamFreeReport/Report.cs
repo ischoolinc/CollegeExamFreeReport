@@ -25,7 +25,7 @@ namespace CollegeExamFreeReport
         AccessHelper _A = new AccessHelper();
         QueryHelper _Q = new QueryHelper();
         BackgroundWorker _BW;
-        string _SchoolName,_SchoolCode;
+        string _SchoolName, _SchoolCode;
         Dictionary<String, String> _Column2Items;
         Dictionary<String, List<string>> _MappingData;
 
@@ -193,13 +193,14 @@ namespace CollegeExamFreeReport
 
             _BW.ReportProgress(40);
             //幹部紀錄
-            dt = _Q.Select("SELECT studentid,schoolyear,semester FROM $behavior.thecadre WHERE studentid IN ('" + ids + "')");
+            dt = _Q.Select("SELECT studentid,schoolyear,semester,cadrename FROM $behavior.thecadre WHERE studentid IN ('" + ids + "')");
             List<string> checkList = new List<string>();
             foreach (DataRow row in dt.Rows)
             {
                 string id = row["studentid"].ToString();
                 string schoolyear = row["schoolyear"].ToString();
                 string semester = row["semester"].ToString();
+                string cadrename = row["cadrename"].ToString();
 
                 string key = id + "_" + schoolyear + "_" + semester;
 
@@ -207,8 +208,19 @@ namespace CollegeExamFreeReport
                 {
                     if (studentDic.ContainsKey(id))
                     {
-                        studentDic[id].CadreTimes++;
-                        checkList.Add(key);
+                        if (!cadrename.Contains("副"))
+                        {
+                            studentDic[id].CadreTimes++;
+                            checkList.Add(key);
+                            continue;
+                        }
+
+                        if (cadrename.Contains("副班") || cadrename.Contains("副社"))
+                        {
+                            studentDic[id].CadreTimes++;
+                            checkList.Add(key);
+                            continue;
+                        }
                     }
                 }
             }
@@ -259,24 +271,24 @@ namespace CollegeExamFreeReport
             {
                 //if (!obj.HasDemeritAB)
                 //{
-                    obj.MeritC += ((obj.MeritA * MAB) + obj.MeritB) * MBC;
-                    obj.DemeritC += ((obj.DemeritA * DAB) + obj.DemeritB) * DBC;
+                obj.MeritC += ((obj.MeritA * MAB) + obj.MeritB) * MBC;
+                obj.DemeritC += ((obj.DemeritA * DAB) + obj.DemeritB) * DBC;
 
-                    int total = obj.MeritC - obj.DemeritC;
+                int total = obj.MeritC - obj.DemeritC;
 
-                    if (total > 0)
-                    {
-                        obj.MC = total % MBC;
-                        obj.MB = (total / MBC) % MAB;
-                        obj.MA = (total / MBC) / MAB;
-                    }
-                    else if (total < 0)
-                    {
-                        total *= -1;
-                        obj.DC = total % DBC;
-                        obj.DB = (total / DBC) % DAB;
-                        obj.DA = (total / DBC) / DAB;
-                    }
+                if (total > 0)
+                {
+                    obj.MC = total % MBC;
+                    obj.MB = (total / MBC) % MAB;
+                    obj.MA = (total / MBC) / MAB;
+                }
+                else if (total < 0)
+                {
+                    total *= -1;
+                    obj.DC = total % DBC;
+                    obj.DB = (total / DBC) % DAB;
+                    obj.DA = (total / DBC) / DAB;
+                }
                 //}
             }
 
@@ -373,7 +385,7 @@ namespace CollegeExamFreeReport
             list.Sort(SortStudent);
 
             int progress = 80;
-            decimal per = (decimal)(100-progress) / studentDic.Count;
+            decimal per = (decimal)(100 - progress) / studentDic.Count;
             int count = 0;
             //Objects轉DataTable
             DataTable data = new DataTable();
