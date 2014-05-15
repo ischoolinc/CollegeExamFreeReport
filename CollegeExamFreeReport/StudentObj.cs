@@ -109,6 +109,12 @@ namespace CollegeExamFreeReport
             get
             {
                 int score = 0;
+
+                if (DA == 0 && DB == 0 && DC == 0)
+                {
+                    score = 1;
+                }
+
                 if (!HasDemeritAB)
                 {
                     if (MA > 0)
@@ -122,10 +128,6 @@ namespace CollegeExamFreeReport
                     else if (MC > 0)
                     {
                         score = 2;
-                    }
-                    else if (DA == 0 && DB == 0 && DC == 0)
-                    {
-                        score = 1;
                     }
                 }
 
