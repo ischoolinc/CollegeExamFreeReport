@@ -460,7 +460,9 @@ namespace CollegeExamFreeReport
 
                 row["弱勢身分_總"] = row["弱勢身分"].ToString();
                 row["均衡學習_總"] = row["均衡學習"].ToString();
-                row["多元學習表現"] = obj.ServiceHoursScore + obj.MeritDemeritScore + obj.SportFitnessScore;
+
+                int score = obj.ServiceHoursScore + obj.MeritDemeritScore + obj.SportFitnessScore;
+                row["多元學習表現"] = (score > 16) ? 16 : score;
                 data.Rows.Add(row);
 
                 count++;
