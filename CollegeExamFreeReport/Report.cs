@@ -29,6 +29,9 @@ namespace CollegeExamFreeReport
         Dictionary<String, String> _Column2Items;
         Dictionary<String, List<string>> _MappingData;
 
+        //功過換算比例
+        public static int MAB, MBC, DAB, DBC;
+
         public Report()
         {
             InitializeComponent();
@@ -41,6 +44,13 @@ namespace CollegeExamFreeReport
             _BW.DoWork += new DoWorkEventHandler(DataBuilding);
             _BW.RunWorkerCompleted += new RunWorkerCompletedEventHandler(ReportBuilding);
             _BW.ProgressChanged += new ProgressChangedEventHandler(BW_Progress);
+
+            //取得功過換算比例
+            MeritDemeritReduceRecord mdrr = MeritDemeritReduce.Select();
+            MAB = mdrr.MeritAToMeritB.HasValue ? mdrr.MeritAToMeritB.Value : 0;
+            MBC = mdrr.MeritBToMeritC.HasValue ? mdrr.MeritBToMeritC.Value : 0;
+            DAB = mdrr.DemeritAToDemeritB.HasValue ? mdrr.DemeritAToDemeritB.Value : 0;
+            DBC = mdrr.DemeritBToDemeritC.HasValue ? mdrr.DemeritBToDemeritC.Value : 0;
         }
 
         private void BW_Progress(object sender, ProgressChangedEventArgs e)
@@ -241,55 +251,11 @@ namespace CollegeExamFreeReport
                     studentDic[id].DemeritC += record.DemeritC;
                 }
             }
-            //List<DisciplineRecord> records = Discipline.SelectByStudentIDs(students);
-            //foreach (DisciplineRecord record in records)
-            //{
-            //    string id = record.RefStudentID;
-            //    if (studentDic.ContainsKey(id))
-            //    {
-            //        studentDic[id].MeritA += record.MeritA.HasValue ? record.MeritA.Value : 0;
-            //        studentDic[id].MeritB += record.MeritB.HasValue ? record.MeritB.Value : 0;
-            //        studentDic[id].MeritC += record.MeritC.HasValue ? record.MeritC.Value : 0;
-            //        if (record.Cleared != "是")
-            //        {
-            //            studentDic[id].DemeritA += record.DemeritA.HasValue ? record.DemeritA.Value : 0;
-            //            studentDic[id].DemeritB += record.DemeritB.HasValue ? record.DemeritB.Value : 0;
-            //            studentDic[id].DemeritC += record.DemeritC.HasValue ? record.DemeritC.Value : 0;
-            //        }
-            //    }
-            //}
-
-            //取得功過換算比例
-            MeritDemeritReduceRecord mdrr = MeritDemeritReduce.Select();
-            int MAB = mdrr.MeritAToMeritB.HasValue ? mdrr.MeritAToMeritB.Value : 0;
-            int MBC = mdrr.MeritBToMeritC.HasValue ? mdrr.MeritBToMeritC.Value : 0;
-            int DAB = mdrr.DemeritAToDemeritB.HasValue ? mdrr.DemeritAToDemeritB.Value : 0;
-            int DBC = mdrr.DemeritBToDemeritC.HasValue ? mdrr.DemeritBToDemeritC.Value : 0;
 
             //獎懲紀錄功過相抵
             foreach (StudentObj obj in studentDic.Values)
             {
-                //if (!obj.HasDemeritAB)
-                //{
-                obj.MeritC += ((obj.MeritA * MAB) + obj.MeritB) * MBC;
-                obj.DemeritC += ((obj.DemeritA * DAB) + obj.DemeritB) * DBC;
-
-                int total = obj.MeritC - obj.DemeritC;
-
-                if (total > 0)
-                {
-                    obj.MC = total % MBC;
-                    obj.MB = (total / MBC) % MAB;
-                    obj.MA = (total / MBC) / MAB;
-                }
-                else if (total < 0)
-                {
-                    total *= -1;
-                    obj.DC = total % DBC;
-                    obj.DB = (total / DBC) % DAB;
-                    obj.DA = (total / DBC) / DAB;
-                }
-                //}
+                obj.MeritDemeritTransfer();
             }
 
             _BW.ReportProgress(60);
