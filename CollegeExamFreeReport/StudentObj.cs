@@ -228,6 +228,10 @@ namespace CollegeExamFreeReport
 
             if (total > 0)
             {
+                MC = total % Report.MBC;
+                MB = (total / Report.MBC) % Report.MAB;
+                MA = (total / Report.MBC) / Report.MAB;
+                /*
                 //最小單位先存起來
                 MC = total;
 
@@ -244,6 +248,7 @@ namespace CollegeExamFreeReport
                     MA = MB / Report.MAB;
                     MB = MB % Report.MAB;
                 }
+                 * */
             }
             else if (total < 0)
             {

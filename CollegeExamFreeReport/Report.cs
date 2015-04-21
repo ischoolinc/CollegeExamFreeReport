@@ -26,6 +26,7 @@ namespace CollegeExamFreeReport
         QueryHelper _Q = new QueryHelper();
         BackgroundWorker _BW;
         string _SchoolName, _SchoolCode;
+        int _SchoolYear;
         Dictionary<String, String> _Column2Items;
         Dictionary<String, List<string>> _MappingData;
 
@@ -39,6 +40,10 @@ namespace CollegeExamFreeReport
             Column2Prepare();
             _SchoolName = K12.Data.School.ChineseName;
             _SchoolCode = K12.Data.School.Code;
+
+            int sy;
+            _SchoolYear = int.TryParse(K12.Data.School.DefaultSchoolYear, out sy) ? sy + 1 : 0;
+
             _BW = new BackgroundWorker();
             _BW.WorkerReportsProgress = true;
             _BW.DoWork += new DoWorkEventHandler(DataBuilding);
@@ -355,6 +360,7 @@ namespace CollegeExamFreeReport
             int count = 0;
             //Objects轉DataTable
             DataTable data = new DataTable();
+            data.Columns.Add("學年度");
             data.Columns.Add("學校名稱");
             data.Columns.Add("學校代碼");
             data.Columns.Add("班級");
@@ -387,9 +393,11 @@ namespace CollegeExamFreeReport
             data.Columns.Add("弱勢身分_總");
             data.Columns.Add("均衡學習_總");
             data.Columns.Add("多元學習表現");
+
             foreach (StudentObj obj in list)
             {
                 DataRow row = data.NewRow();
+                row["學年度"] = _SchoolYear;
                 row["學校名稱"] = _SchoolName;
                 row["學校代碼"] = _SchoolCode;
                 row["班級"] = obj.ClassName;
