@@ -11,3 +11,11 @@ D:\ischool desktop\modules\JHCore\CollegeExamFreeReport.pdb
 D:\GitHub2\CollegeExamFreeReport\CollegeExamFreeReport\obj\Debug\CollegeExamFreeReport.TemplateSelecter.resources
 D:\GitHub2\CollegeExamFreeReport\CollegeExamFreeReport\bin\Debug\CollegeExamFreeReport.dll
 D:\GitHub2\CollegeExamFreeReport\CollegeExamFreeReport\bin\Debug\CollegeExamFreeReport.pdb
+D:\GitProjModules\ischoolDesktop\CollegeExamFreeReport\CollegeExamFreeReport\bin\Debug\CollegeExamFreeReport.dll
+D:\GitProjModules\ischoolDesktop\CollegeExamFreeReport\CollegeExamFreeReport\bin\Debug\CollegeExamFreeReport.pdb
+D:\GitProjModules\ischoolDesktop\CollegeExamFreeReport\CollegeExamFreeReport\obj\Debug\CollegeExamFreeReport.Properties.Resources.resources
+D:\GitProjModules\ischoolDesktop\CollegeExamFreeReport\CollegeExamFreeReport\obj\Debug\CollegeExamFreeReport.Report.resources
+D:\GitProjModules\ischoolDesktop\CollegeExamFreeReport\CollegeExamFreeReport\obj\Debug\CollegeExamFreeReport.TemplateSelecter.resources
+D:\GitProjModules\ischoolDesktop\CollegeExamFreeReport\CollegeExamFreeReport\obj\Debug\CollegeExamFreeReport.csproj.GenerateResource.Cache
+D:\GitProjModules\ischoolDesktop\CollegeExamFreeReport\CollegeExamFreeReport\obj\Debug\CollegeExamFreeReport.dll
+D:\GitProjModules\ischoolDesktop\CollegeExamFreeReport\CollegeExamFreeReport\obj\Debug\CollegeExamFreeReport.pdb

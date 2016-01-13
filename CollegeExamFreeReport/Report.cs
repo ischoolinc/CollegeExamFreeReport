@@ -257,6 +257,8 @@ namespace CollegeExamFreeReport
                 }
             }
 
+
+         
             //獎懲紀錄功過相抵
             foreach (StudentObj obj in studentDic.Values)
             {
@@ -409,12 +411,23 @@ namespace CollegeExamFreeReport
                 row["幹部紀錄"] = obj.CadreTimes;
                 row["服務學習"] = obj.ServiceHoursScore;
                 row["處分紀錄"] = obj.HasDemeritAB ? "有" : "無";
-                row["嘉獎"] = obj.MC;
-                row["小功"] = obj.MB;
-                row["大功"] = obj.MA;
-                row["警告"] = obj.DC;
-                row["小過"] = obj.DB;
-                row["大過"] = obj.DA;
+
+                // 功過相抵
+                //row["嘉獎"] = obj.MC;
+                //row["小功"] = obj.MB;
+                //row["大功"] = obj.MA;
+                //row["警告"] = obj.DC;
+                //row["小過"] = obj.DB;
+                //row["大過"] = obj.DA;
+
+                // 105 獎懲使用原始統計
+                row["嘉獎"] = obj.MeritC;
+                row["小功"] = obj.MeritB;
+                row["大功"] = obj.MeritA;
+                row["警告"] = obj.DemeritC;
+                row["小過"] = obj.DemeritB;
+                row["大過"] = obj.DemeritA;
+
                 row["表現評量"] = obj.MeritDemeritScore;
                 row["坐姿體前彎"] = obj.CheckScore("坐姿體前彎");
                 row["立定跳遠"] = obj.CheckScore("立定跳遠");
