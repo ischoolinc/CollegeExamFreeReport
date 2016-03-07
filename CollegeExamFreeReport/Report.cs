@@ -16,6 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SmartSchool.ePaper;
 
 namespace CollegeExamFreeReport
 {
@@ -396,6 +397,11 @@ namespace CollegeExamFreeReport
             data.Columns.Add("均衡學習_總");
             data.Columns.Add("多元學習表現");
 
+            ElectronicPaper ePaper = new ElectronicPaper("超額比序項目積分證明單_" + DateTime.Now.Year + DateTime.Now.Month.ToString().PadLeft(2, '0') + DateTime.Now.Day.ToString().PadLeft(2, '0'), School.DefaultSchoolYear, School.DefaultSemester, SmartSchool.ePaper.ViewerType.Student);
+            DataTable tempData = new DataTable();
+            foreach (DataColumn dc in data.Columns)
+                tempData.Columns.Add(dc.ColumnName);
+
             foreach (StudentObj obj in list)
             {
                 DataRow row = data.NewRow();
@@ -450,8 +456,26 @@ namespace CollegeExamFreeReport
 
                 int score = obj.ServiceHoursScore + obj.MeritDemeritScore + obj.SportFitnessScore;
                 row["多元學習表現"] = (score > 16) ? 16 : score;
-                data.Rows.Add(row);
 
+                // 檢查是否上傳電子報表
+                if (_Configure.CheckUploadEpaper)
+                {
+                    tempData.Clear();
+                    DataRow dr = tempData.NewRow();
+                    foreach (DataColumn dc in tempData.Columns)
+                        dr[dc.ColumnName] = row[dc.ColumnName];
+
+                    tempData.Rows.Add(dr);
+
+                    Document eachDoc = _Configure.Template.Clone();
+                    eachDoc.MailMerge.Execute(tempData);
+                    MemoryStream stream = new MemoryStream();
+                    eachDoc.Save(stream, SaveFormat.Doc);
+                    ePaper.Append(new PaperItem(PaperFormat.Office2003Doc, stream, obj.Id));
+                }
+
+                data.Rows.Add(row);             
+                
                 count++;
                 progress += (int)(count * per);
                 _BW.ReportProgress(progress);
@@ -459,6 +483,12 @@ namespace CollegeExamFreeReport
 
             Document doc = _Configure.Template;
             doc.MailMerge.Execute(data);
+
+            // 上傳電子報表
+            if(_Configure.CheckUploadEpaper)
+            {
+                DispatcherProvider.Dispatch(ePaper);
+            }
 
             e.Result = doc;
         }
@@ -560,6 +590,8 @@ namespace CollegeExamFreeReport
             {
                 _Configure = Configures[0];
                 _Configure.Decode();
+                _Configure.CheckUploadEpaper = chkUploadEPaper.Checked;
+                _Configure.Save();
             }
             else
             {
@@ -575,6 +607,7 @@ namespace CollegeExamFreeReport
                     _Configure.Template = new Document(new MemoryStream(Properties.Resources.Template_南區));
                 }
                 _Configure.Encode();
+                _Configure.CheckUploadEpaper = chkUploadEPaper.Checked;
                 _Configure.Save();
             }
         }
@@ -685,6 +718,7 @@ namespace CollegeExamFreeReport
 
         private void LoadSetting()
         {
+            
             List<Setting> UDTlist = _A.Select<Setting>(); //檢查UDT並回傳資料
             DataGridViewRow row;
             if (UDTlist.Count > 0) //UDT內有設定才做讀取
@@ -698,6 +732,14 @@ namespace CollegeExamFreeReport
                     dataGridViewX1.Rows.Add(row);
                 }
             }
+
+            // 讀取是否上傳電子報表設定檔
+            List<Configure> _confList = _A.Select<Configure>();
+
+            chkUploadEPaper.Checked = false;
+            if (_confList.Count > 0)
+                chkUploadEPaper.Checked = _confList[0].CheckUploadEpaper;
+
         }
 
         private void Report_Load(object sender, EventArgs e)

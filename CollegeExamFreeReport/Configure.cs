@@ -4,11 +4,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FISCA.UDT;
 
 namespace CollegeExamFreeReport
 {
     [FISCA.UDT.TableName(Global._UDTTableName)]
-    class Configure : FISCA.UDT.ActiveRecord
+    class Configure : ActiveRecord
     {
         /// <summary>
         /// 報表範本
@@ -28,5 +29,11 @@ namespace CollegeExamFreeReport
         {
             this.Template = new Aspose.Words.Document(new MemoryStream(Convert.FromBase64String(this.TemplateStream)));
         }
+
+        ///<summary>
+        /// 檢查是否上傳電子報表
+        ///</summary>
+        [Field(Field = "check_upload_epaper", Indexed = false)]
+        public bool CheckUploadEpaper { get; set; }
     }
 }

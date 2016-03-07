@@ -75,6 +75,11 @@
       <HintPath>library\K12.Presentation.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="SmartSchool.ePaper, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>library\SmartSchool.ePaper.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -140,6 +145,8 @@
     <Content Include="library\K12.BusinessLogic.dll" />
     <Content Include="library\K12.Data.dll" />
     <Content Include="library\K12.Presentation.dll" />
+    <Content Include="library\SmartSchool.ePaper.dll" />
+    <Content Include="library\SmartSchool.ePaper.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
