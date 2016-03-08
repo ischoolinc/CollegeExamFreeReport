@@ -16,7 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using SmartSchool.ePaper;
+using Campus.ePaper;
 
 namespace CollegeExamFreeReport
 {
@@ -112,6 +112,29 @@ namespace CollegeExamFreeReport
             EnableForm(true);
             Document doc = (Document)e.Result;
             doc.MailMerge.DeleteFields();
+
+            // 檢查是否上傳電子報表
+            if(chkUploadEPaper.Checked)
+            {
+                List<Document> docList = new List<Document> ();
+                foreach(Section ss in doc.Sections)
+                {
+                    Document dc = new Document();
+                    dc.Sections.Clear();
+                    dc.Sections.Add(dc.ImportNode(ss, true));
+                    docList.Add(dc);
+                }
+
+                Update_ePaper up = new Update_ePaper(docList, "超額比序項目積分證明單", PrefixStudent.系統編號);
+                if(up.ShowDialog ()== System.Windows.Forms.DialogResult.Yes)
+                {
+                    MsgBox.Show("電子報表已上傳!!");
+                }
+                else
+                {
+                    MsgBox.Show("已取消!!");
+                }
+            }
             SaveFileDialog sd = new SaveFileDialog();
             sd.Title = "另存新檔";
             sd.FileName = Global.ReportName + ".doc";
@@ -363,6 +386,7 @@ namespace CollegeExamFreeReport
             int count = 0;
             //Objects轉DataTable
             DataTable data = new DataTable();
+            data.Columns.Add("學生系統編號");
             data.Columns.Add("學年度");
             data.Columns.Add("學校名稱");
             data.Columns.Add("學校代碼");
@@ -397,14 +421,10 @@ namespace CollegeExamFreeReport
             data.Columns.Add("均衡學習_總");
             data.Columns.Add("多元學習表現");
 
-            ElectronicPaper ePaper = new ElectronicPaper("超額比序項目積分證明單_" + DateTime.Now.Year + DateTime.Now.Month.ToString().PadLeft(2, '0') + DateTime.Now.Day.ToString().PadLeft(2, '0'), School.DefaultSchoolYear, School.DefaultSemester, SmartSchool.ePaper.ViewerType.Student);
-            DataTable tempData = new DataTable();
-            foreach (DataColumn dc in data.Columns)
-                tempData.Columns.Add(dc.ColumnName);
-
             foreach (StudentObj obj in list)
             {
                 DataRow row = data.NewRow();
+                row["學生系統編號"] ="系統編號{"+obj.Id+"}";
                 row["學年度"] = _SchoolYear;
                 row["學校名稱"] = _SchoolName;
                 row["學校代碼"] = _SchoolCode;
@@ -456,24 +476,6 @@ namespace CollegeExamFreeReport
 
                 int score = obj.ServiceHoursScore + obj.MeritDemeritScore + obj.SportFitnessScore;
                 row["多元學習表現"] = (score > 16) ? 16 : score;
-
-                // 檢查是否上傳電子報表
-                if (_Configure.CheckUploadEpaper)
-                {
-                    tempData.Clear();
-                    DataRow dr = tempData.NewRow();
-                    foreach (DataColumn dc in tempData.Columns)
-                        dr[dc.ColumnName] = row[dc.ColumnName];
-
-                    tempData.Rows.Add(dr);
-
-                    Document eachDoc = _Configure.Template.Clone();
-                    eachDoc.MailMerge.Execute(tempData);
-                    MemoryStream stream = new MemoryStream();
-                    eachDoc.Save(stream, SaveFormat.Doc);
-                    ePaper.Append(new PaperItem(PaperFormat.Office2003Doc, stream, obj.Id));
-                }
-
                 data.Rows.Add(row);             
                 
                 count++;
@@ -483,13 +485,6 @@ namespace CollegeExamFreeReport
 
             Document doc = _Configure.Template;
             doc.MailMerge.Execute(data);
-
-            // 上傳電子報表
-            if(_Configure.CheckUploadEpaper)
-            {
-                DispatcherProvider.Dispatch(ePaper);
-            }
-
             e.Result = doc;
         }
 
@@ -609,6 +604,16 @@ namespace CollegeExamFreeReport
                 _Configure.Encode();
                 _Configure.CheckUploadEpaper = chkUploadEPaper.Checked;
                 _Configure.Save();
+            }
+
+            // 檢查合併欄位是否有學生系統編號
+            if(chkUploadEPaper.Checked)
+            {
+                if(!_Configure.Template.MailMerge.GetFieldNames().Contains("學生系統編號"))
+                {
+                    MsgBox.Show("沒有電子報表識別欄位，請在範本內加入<<學生系統編號>>合併欄位。");
+                    chkUploadEPaper.Checked = false;
+                }
             }
         }
 
