@@ -386,7 +386,7 @@ namespace CollegeExamFreeReport
             int count = 0;
             //Objects轉DataTable
             DataTable data = new DataTable();
-            data.Columns.Add("學生系統編號");
+            data.Columns.Add("電子報表辨識編號");
             data.Columns.Add("學年度");
             data.Columns.Add("學校名稱");
             data.Columns.Add("學校代碼");
@@ -424,7 +424,7 @@ namespace CollegeExamFreeReport
             foreach (StudentObj obj in list)
             {
                 DataRow row = data.NewRow();
-                row["學生系統編號"] ="系統編號{"+obj.Id+"}";
+                row["電子報表辨識編號"] = "系統編號{" + obj.Id + "}"; // 學生系統編號
                 row["學年度"] = _SchoolYear;
                 row["學校名稱"] = _SchoolName;
                 row["學校代碼"] = _SchoolCode;
@@ -609,9 +609,9 @@ namespace CollegeExamFreeReport
             // 檢查合併欄位是否有學生系統編號
             if(chkUploadEPaper.Checked)
             {
-                if(!_Configure.Template.MailMerge.GetFieldNames().Contains("學生系統編號"))
+                if (!_Configure.Template.MailMerge.GetFieldNames().Contains("電子報表辨識編號"))
                 {
-                    MsgBox.Show("沒有電子報表識別欄位，請在範本內加入<<學生系統編號>>合併欄位。");
+                    MsgBox.Show("沒有電子報表識別欄位，請在範本內加入<<電子報表辨識編號>>合併欄位。");
                     chkUploadEPaper.Checked = false;
                 }
             }
