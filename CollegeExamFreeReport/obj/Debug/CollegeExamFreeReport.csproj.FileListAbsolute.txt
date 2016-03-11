@@ -19,3 +19,4 @@ D:\GitProjModules\ischoolDesktop\CollegeExamFreeReport\CollegeExamFreeReport\obj
 D:\GitProjModules\ischoolDesktop\CollegeExamFreeReport\CollegeExamFreeReport\obj\Debug\CollegeExamFreeReport.csproj.GenerateResource.Cache
 D:\GitProjModules\ischoolDesktop\CollegeExamFreeReport\CollegeExamFreeReport\obj\Debug\CollegeExamFreeReport.dll
 D:\GitProjModules\ischoolDesktop\CollegeExamFreeReport\CollegeExamFreeReport\obj\Debug\CollegeExamFreeReport.pdb
+D:\GitProjModules\ischoolDesktop\CollegeExamFreeReport\CollegeExamFreeReport\obj\Debug\CollegeExamFreeReport.csprojResolveAssemblyReference.cache

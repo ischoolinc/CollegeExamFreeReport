@@ -179,6 +179,12 @@ namespace CollegeExamFreeReport
                 if (score > 6)
                     score = 6;
 
+                // 免測處理
+                if (sit_and_reach_degree == "免測" || standing_long_jump_degree == "免測" || sit_up_degree == "免測" || cardiorespiratory_degree == "免測")
+                {
+                    score = 6;
+                }
+
                 return score;
             }
         }
@@ -213,6 +219,8 @@ namespace CollegeExamFreeReport
             {
                 return "達";
             }
+            else if (value == "免測")
+                return "免測";
             else
             {
                 return "未達";
