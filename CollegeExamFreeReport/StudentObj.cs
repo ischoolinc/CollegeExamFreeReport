@@ -215,12 +215,10 @@ namespace CollegeExamFreeReport
                     break;
             }
 
-            if (value == "金牌" || value == "銀牌" || value == "銅牌" || value == "中等")
+            if (value == "金牌" || value == "銀牌" || value == "銅牌" || value == "中等" || value=="免測")
             {
                 return "達";
-            }
-            else if (value == "免測")
-                return "免測";
+            }            
             else
             {
                 return "未達";
