@@ -42,6 +42,10 @@ namespace CollegeExamFreeReport
             _SchoolName = K12.Data.School.ChineseName;
             _SchoolCode = K12.Data.School.Code;
 
+            // 2018/05/10 穎驊 新增 統計資料截止時間以利產生正確的範圍時間內資料
+            // 預設為顯示今天
+            dateTimeInput1.Value = DateTime.Now;
+
             int sy;
             _SchoolYear = int.TryParse(K12.Data.School.DefaultSchoolYear, out sy) ? sy + 1 : 0;
 
@@ -155,6 +159,9 @@ namespace CollegeExamFreeReport
 
         private void DataBuilding(object sender, DoWorkEventArgs e)
         {
+            //取得結束時間 並轉成 像是 2018/05/10 格式
+            String endDate = dateTimeInput1.Value.ToString("yyyy/MM/dd");
+
             _BW.ReportProgress(0);
             SaveSetting();
 
@@ -219,8 +226,8 @@ namespace CollegeExamFreeReport
             }
 
             _BW.ReportProgress(30);
-            //服務學習紀錄
-            dt = _Q.Select("SELECT ref_student_id,hours FROM $k12.service.learning.record WHERE ref_student_id IN ('" + ids + "')");
+            //服務學習紀錄  (2018/5/10 穎驊 新增截止時間設定)
+            dt = _Q.Select("SELECT ref_student_id,hours FROM $k12.service.learning.record WHERE ref_student_id IN ('" + ids + "') AND occur_date <= '"+endDate+"' ::timestamp");
             foreach (DataRow row in dt.Rows)
             {
                 string id = row["ref_student_id"].ToString();
@@ -265,24 +272,250 @@ namespace CollegeExamFreeReport
             }
 
             _BW.ReportProgress(50);
-            //獎懲紀錄
-            List<AutoSummaryRecord> records = AutoSummary.Select(students, null);
-            foreach (AutoSummaryRecord record in records)
+            ////獎懲紀錄
+            //List<AutoSummaryRecord> records = AutoSummary.Select(students, null);
+            //foreach (AutoSummaryRecord record in records)
+            //{
+            //    string id = record.RefStudentID;
+            //    if (studentDic.ContainsKey(id))
+            //    {
+            //        studentDic[id].MeritA += record.MeritA;
+            //        studentDic[id].MeritB += record.MeritB;
+            //        studentDic[id].MeritC += record.MeritC;
+            //        studentDic[id].DemeritA += record.DemeritA;
+            //        studentDic[id].DemeritB += record.DemeritB;
+            //        studentDic[id].DemeritC += record.DemeritC;
+            //    }
+            //}
+
+            // 2018/5/11 穎驊新增，自羿均那邊拿到他調整好　高中職免試入學抓取資料的SQL
+            // 提出其中　獎懲的部分稍作調整，作為新的五專免試入學學生獎懲資料抓取方式
+            // 其最大的特色是，可以設定截止時間、過濾銷過紀錄、自動加總非明細資料(轉學生適用)、
+            // 且無論該學期有無學習歷程，只要有計獎懲一律計算，不會因為該學期休學而不計算
+
+            List<string> sidList = new List<string>();
+
+            foreach (string sid in studentDic.Keys)
             {
-                string id = record.RefStudentID;
+                sidList.Add("SELECT " + sid + "::BIGINT AS id ");
+            }
+
+            string target_student_s = String.Join(" UNION ALL ", sidList);
+
+
+            string sql = string.Format(@"WITH target_datetime AS(
+	SELECT
+		'{0}'::TIMESTAMP AS end_date
+) ,target_student AS(
+	{1}                 
+) ,target_sems_demerit AS(
+	SELECT
+		target_student.id
+		,CASE 
+			WHEN SUM(大過) IS NULL 
+			THEN 0 
+			ELSE SUM(大過) 
+		END AS 大過支數
+		,CASE 
+			WHEN SUM(小過) IS NULL 
+			THEN 0 
+			ELSE SUM(小過) 
+		END AS 小過支數
+		,CASE 
+			WHEN SUM(警告) IS NULL 
+			THEN 0 
+			ELSE SUM(警告) 
+		END AS 警告支數
+	FROM
+		target_student
+		LEFT OUTER JOIN (
+			SELECT
+				sems_moral_score.ref_student_id
+				, CAST( regexp_replace( xpath_string(sems_moral_score.initial_summary,'/InitialSummary/DisciplineStatistics/Demerit/@A'), '^$', '0') AS INTEGER) AS 大過
+		        , CAST( regexp_replace( xpath_string(sems_moral_score.initial_summary,'/InitialSummary/DisciplineStatistics/Demerit/@B'), '^$', '0') AS INTEGER) AS 小過
+		        , CAST( regexp_replace( xpath_string(sems_moral_score.initial_summary,'/InitialSummary/DisciplineStatistics/Demerit/@C'), '^$', '0') AS INTEGER) AS 警告
+			FROM
+				sems_moral_score
+		) AS sems_demerit ON target_student.id = sems_demerit.ref_student_id
+	GROUP BY 
+		target_student.id
+) ,target_demerit AS(
+	SELECT
+		target_student.id
+		,CASE 
+			WHEN SUM(大過) IS NULL 
+			THEN 0 
+			ELSE SUM(大過) 
+		END AS 大過支數
+		,CASE 
+			WHEN SUM(小過) IS NULL 
+			THEN 0 
+			ELSE SUM(小過) 
+		END AS 小過支數
+		,CASE 
+			WHEN SUM(警告) IS NULL 
+			THEN 0 
+			ELSE SUM(警告) 
+		END AS 警告支數
+	FROM
+		target_student
+		LEFT OUTER JOIN(
+			SELECT
+				discipline.ref_student_id
+				, CAST( regexp_replace( xpath_string(discipline.detail,'/Discipline/Demerit/@A'), '^$', '0') AS INTEGER) AS 大過
+		        , CAST( regexp_replace( xpath_string(discipline.detail,'/Discipline/Demerit/@B'), '^$', '0') AS INTEGER) AS 小過
+		        , CAST( regexp_replace( xpath_string(discipline.detail,'/Discipline/Demerit/@C'), '^$', '0') AS INTEGER) AS 警告
+			FROM
+				target_datetime
+				LEFT OUTER JOIN discipline
+					ON discipline.occur_date <= target_datetime.end_date 
+			WHERE
+				merit_flag = 0
+				AND xpath_string(discipline.detail,'/Discipline/Demerit/@Cleared') <> '是'
+				AND ref_student_id IN(SELECT * FROM target_student)		
+			UNION ALL
+			SELECT
+				discipline.ref_student_id
+				, CAST( regexp_replace( xpath_string(discipline.detail,'/Discipline/Demerit/@A'), '^$', '0') AS INTEGER) AS 大過
+		        , CAST( regexp_replace( xpath_string(discipline.detail,'/Discipline/Demerit/@B'), '^$', '0') AS INTEGER) AS 小過
+		        , CAST( regexp_replace( xpath_string(discipline.detail,'/Discipline/Demerit/@C'), '^$', '0') AS INTEGER) AS 警告
+			FROM
+				target_datetime
+				LEFT OUTER JOIN discipline
+					ON discipline.occur_date <= target_datetime.end_date 
+			WHERE
+				merit_flag = 0
+				AND xpath_string(discipline.detail,'/Discipline/Demerit/@Cleared') = '是'
+				AND xpath_string(discipline.detail,'/Discipline/Demerit/@ClearDate')::TIMESTAMP > (SELECT end_date FROM target_datetime)
+				AND ref_student_id IN(SELECT id FROM target_student)		
+		) AS target_discipline ON target_student.id = target_discipline.ref_student_id
+	GROUP BY target_student.id
+) ,total_demerit AS(
+	SELECT
+		total.id
+		, CASE WHEN SUM(大過支數) IS NULL THEN 0 ELSE SUM(大過支數) END AS 大過支數
+		, CASE WHEN SUM(小過支數) IS NULL THEN 0 ELSE SUM(小過支數) END AS 小過支數
+		, CASE WHEN SUM(警告支數) IS NULL THEN 0 ELSE SUM(警告支數) END AS 警告支數
+	FROM(
+		SELECT * FROM target_demerit
+		UNION ALL
+		SELECT * FROM target_sems_demerit	
+		) AS total
+	GROUP BY
+		total.id
+) ,target_sems_merit AS(
+	SELECT
+		target_student.id
+		,CASE 
+			WHEN SUM(大功) IS NULL 
+			THEN 0 
+			ELSE SUM(大功) 
+		END AS 大功支數
+		,CASE 
+			WHEN SUM(小功) IS NULL 
+			THEN 0 
+			ELSE SUM(小功) 
+		END AS 小功支數
+		,CASE 
+			WHEN SUM(嘉獎) IS NULL 
+			THEN 0 
+			ELSE SUM(嘉獎) 
+		END AS 嘉獎支數
+	FROM
+		target_student
+		LEFT OUTER JOIN (
+			SELECT
+				sems_moral_score.ref_student_id
+				, CAST( regexp_replace( xpath_string(sems_moral_score.initial_summary,'/InitialSummary/DisciplineStatistics/Merit/@A'), '^$', '0') AS INTEGER) AS 大功
+		        , CAST( regexp_replace( xpath_string(sems_moral_score.initial_summary,'/InitialSummary/DisciplineStatistics/Merit/@B'), '^$', '0') AS INTEGER) AS 小功
+		        , CAST( regexp_replace( xpath_string(sems_moral_score.initial_summary,'/InitialSummary/DisciplineStatistics/Merit/@C'), '^$', '0') AS INTEGER) AS 嘉獎
+			FROM
+				sems_moral_score
+
+		) AS sems_merit ON target_student.id = sems_merit.ref_student_id
+	GROUP BY 
+		target_student.id
+) ,target_merit AS(
+	SELECT
+		ref_student_id AS id
+		,CASE 
+			WHEN SUM(大功) IS NULL 
+			THEN 0 
+			ELSE SUM(大功) 
+		END AS 大功支數
+		,CASE 
+			WHEN SUM(小功) IS NULL 
+			THEN 0 
+			ELSE SUM(小功) 
+		END AS 小功支數
+		,CASE 
+			WHEN SUM(嘉獎) IS NULL 
+			THEN 0 
+			ELSE SUM(嘉獎) 
+		END AS 嘉獎支數
+	FROM(
+		SELECT
+			discipline.ref_student_id
+			, CAST( regexp_replace( xpath_string(discipline.detail,'/Discipline/Merit/@A'), '^$', '0') AS INTEGER) AS 大功
+	        , CAST( regexp_replace( xpath_string(discipline.detail,'/Discipline/Merit/@B'), '^$', '0') AS INTEGER) AS 小功
+	        , CAST( regexp_replace( xpath_string(discipline.detail,'/Discipline/Merit/@C'), '^$', '0') AS INTEGER) AS 嘉獎
+		FROM
+			target_datetime
+			LEFT OUTER JOIN discipline
+				ON discipline.occur_date <= target_datetime.end_date 
+		WHERE
+			merit_flag = 1
+			AND ref_student_id IN(SELECT * FROM target_student)		
+		) AS target_discipline
+	GROUP BY ref_student_id
+) ,total_merit AS (
+	SELECT
+		total.id
+		, CASE WHEN SUM(大功支數) IS NULL THEN 0 ELSE SUM(大功支數) END AS 大功支數
+		, CASE WHEN SUM(小功支數) IS NULL THEN 0 ELSE SUM(小功支數) END AS 小功支數
+		, CASE WHEN SUM(嘉獎支數) IS NULL THEN 0 ELSE SUM(嘉獎支數) END AS 嘉獎支數
+	FROM(
+		SELECT * FROM target_merit
+		UNION ALL
+		SELECT * FROM target_sems_merit	
+		) AS total
+	GROUP BY
+		total.id
+) 
+SELECT 
+	target_student.id	
+    ,CASE WHEN total_merit.大功支數 is null THEN 0 ELSE total_merit.大功支數 END as 大功支數    
+    ,CASE WHEN total_merit.小功支數 is null THEN 0 ELSE total_merit.小功支數 END as 小功支數
+    ,CASE WHEN total_merit.嘉獎支數 is null THEN 0 ELSE total_merit.嘉獎支數 END as 嘉獎支數    
+    ,CASE WHEN total_demerit.大過支數 is null THEN 0 ELSE total_demerit.大過支數 END as 大過支數
+    ,CASE WHEN total_demerit.小過支數 is null THEN 0 ELSE total_demerit.小過支數 END as 小過支數
+    ,CASE WHEN total_demerit.警告支數 is null THEN 0 ELSE total_demerit.警告支數 END as 警告支數    
+FROM 
+	target_student	
+	LEFT OUTER JOIN total_demerit
+		ON total_demerit.id = target_student.id
+	LEFT OUTER JOIN total_merit
+		ON total_merit.id = target_student.id	
+	", endDate, target_student_s);
+            QueryHelper qh = new QueryHelper();
+            DataTable dt_discipline = qh.Select(sql);
+            foreach (DataRow row in dt_discipline.Rows)
+            {
+                string id = ""+row["id"];
                 if (studentDic.ContainsKey(id))
                 {
-                    studentDic[id].MeritA += record.MeritA;
-                    studentDic[id].MeritB += record.MeritB;
-                    studentDic[id].MeritC += record.MeritC;
-                    studentDic[id].DemeritA += record.DemeritA;
-                    studentDic[id].DemeritB += record.DemeritB;
-                    studentDic[id].DemeritC += record.DemeritC;
+                    studentDic[id].MeritA = int.Parse("" + row["大功支數"]);
+                    studentDic[id].MeritB = int.Parse("" + row["小功支數"]);
+                    studentDic[id].MeritC = int.Parse("" + row["嘉獎支數"]);
+                    studentDic[id].DemeritA = int.Parse("" + row["大過支數"]);
+                    studentDic[id].DemeritB = int.Parse("" + row["小過支數"]);
+                    studentDic[id].DemeritC = int.Parse("" + row["警告支數"]);
                 }
+
             }
 
 
-         
+
             //獎懲紀錄功過相抵
             foreach (StudentObj obj in studentDic.Values)
             {
@@ -591,16 +824,20 @@ namespace CollegeExamFreeReport
             else
             {
                 _Configure = new Configure();
-                TemplateSelecter selecter = new TemplateSelecter();
-                selecter.ShowDialog();
-                if (selecter.DialogResult == DialogResult.OK)
-                {
-                    _Configure.Template = new Document(new MemoryStream(Properties.Resources.Template_中區));
-                }
-                else
-                {
-                    _Configure.Template = new Document(new MemoryStream(Properties.Resources.Template_南區));
-                }
+                //TemplateSelecter selecter = new TemplateSelecter();
+                //selecter.ShowDialog();
+                //if (selecter.DialogResult == DialogResult.OK)
+                //{
+                //    _Configure.Template = new Document(new MemoryStream(Properties.Resources.Template_中區));
+                //}
+                //else
+                //{
+                //    _Configure.Template = new Document(new MemoryStream(Properties.Resources.Template_南區));
+                //}
+
+                // 2018/05/10 穎驊新增， 整理後，五專免試入學 績分比序格式相同 不再分區
+                _Configure.Template = new Document(new MemoryStream(Properties.Resources.Template_不分區));
+
                 _Configure.Encode();
                 _Configure.CheckUploadEpaper = chkUploadEPaper.Checked;
                 _Configure.Save();

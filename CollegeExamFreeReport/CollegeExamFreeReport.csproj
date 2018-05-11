@@ -129,6 +129,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Template_不分區.doc" />
     <None Include="Resources\Template_中區.doc" />
     <None Include="Resources\Template_南區.doc" />
     <None Include="Resources\合併欄位.doc" />
