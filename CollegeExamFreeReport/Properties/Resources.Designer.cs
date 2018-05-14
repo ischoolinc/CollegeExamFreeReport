@@ -83,6 +83,16 @@ namespace CollegeExamFreeReport.Properties {
         /// <summary>
         ///   查詢類型 System.Byte[] 的當地語系化資源。
         /// </summary>
+        internal static byte[] Template_優先 {
+            get {
+                object obj = ResourceManager.GetObject("Template_優先", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Byte[] 的當地語系化資源。
+        /// </summary>
         internal static byte[] Template_南區 {
             get {
                 object obj = ResourceManager.GetObject("Template_南區", resourceCulture);

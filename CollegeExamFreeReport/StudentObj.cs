@@ -89,6 +89,40 @@ namespace CollegeExamFreeReport
             }
         }
 
+        public int DomainItemScore_Priority
+        {
+            get
+            {
+                int score = 0;
+
+                if (domainAverageScores.ContainsKey("健康與體育"))
+                {
+                    if (domainAverageScores["健康與體育"] >= 60)
+                    {
+                        score += 7;
+                    }
+                }
+
+                if (domainAverageScores.ContainsKey("藝術與人文"))
+                {
+                    if (domainAverageScores["藝術與人文"] >= 60)
+                    {
+                        score += 7;
+                    }
+                }
+
+                if (domainAverageScores.ContainsKey("綜合活動"))
+                {
+                    if (domainAverageScores["綜合活動"] >= 60)
+                    {
+                        score += 7;
+                    }
+                }
+
+                return score;
+            }
+        }
+
 
         public int ServiceHoursScore
         {
@@ -99,6 +133,20 @@ namespace CollegeExamFreeReport
 
                 if (score > 7)
                     score = 7;
+
+                return score;
+            }
+        }
+
+        public double ServiceHoursScore_Priority
+        {
+            get
+            {
+                double score = (double)(ServiceHours) *0.25;
+                score += CadreTimes*2;
+
+                if (score > 15)
+                    score = 15;
 
                 return score;
             }
@@ -262,6 +310,48 @@ namespace CollegeExamFreeReport
                 DC = total % Report.DBC;
                 DB = (total / Report.DBC) % Report.DAB;
                 DA = (total / Report.DBC) / Report.DAB;
+            }
+        }
+
+
+
+        public void MeritDemeritTransfer_priority()
+        {
+            int merit = ((MeritA * Report_priority.MAB) + MeritB) * Report_priority.MBC + MeritC;
+            int demerit = ((DemeritA * Report_priority.DAB) + DemeritB) * Report_priority.DBC + DemeritC;
+
+            int total = merit - demerit;
+
+            if (total > 0)
+            {
+                MC = total % Report_priority.MBC;
+                MB = (total / Report_priority.MBC) % Report_priority.MAB;
+                MA = (total / Report_priority.MBC) / Report_priority.MAB;
+                /*
+                //最小單位先存起來
+                MC = total;
+
+                //原始紀錄有大功或小功必須先轉換一次
+                if (MeritA > 0 || MeritB > 0)
+                {
+                    MB = MC / Report.MBC;
+                    MC = MC % Report.MBC;
+                }
+
+                //原始紀錄有大功再轉一次
+                if (MeritA > 0)
+                {
+                    MA = MB / Report.MAB;
+                    MB = MB % Report.MAB;
+                }
+                 * */
+            }
+            else if (total < 0)
+            {
+                total *= -1;
+                DC = total % Report_priority.DBC;
+                DB = (total / Report_priority.DBC) % Report_priority.DAB;
+                DA = (total / Report_priority.DBC) / Report_priority.DAB;
             }
         }
 

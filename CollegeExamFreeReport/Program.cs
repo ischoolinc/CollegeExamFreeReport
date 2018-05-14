@@ -37,7 +37,8 @@ namespace CollegeExamFreeReport
             item1["報表"]["成績相關報表"]["107年五專(優先)免試入學相關報表"]["超額比序項目積分證明單(優先免試入學)"].Enable = false;
             item1["報表"]["成績相關報表"]["107年五專(優先)免試入學相關報表"]["超額比序項目積分證明單(優先免試入學)"].Click += delegate
             {
-
+                Report_priority report = new Report_priority();
+                report.ShowDialog();
             };
 
             K12.Presentation.NLDPanels.Student.SelectedSourceChanged += delegate

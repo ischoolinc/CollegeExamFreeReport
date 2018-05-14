@@ -19,10 +19,10 @@ using System.Windows.Forms;
 using Campus.ePaper;
 
 namespace CollegeExamFreeReport
-{
-    public partial class Report : BaseForm
+{    
+    public partial class Report_priority : BaseForm
     {
-        Configure _Configure;
+        Configure_priority _Configure;
         AccessHelper _A = new AccessHelper();
         QueryHelper _Q = new QueryHelper();
         BackgroundWorker _BW;
@@ -34,7 +34,7 @@ namespace CollegeExamFreeReport
         //功過換算比例
         public static int MAB, MBC, DAB, DBC;
 
-        public Report()
+        public Report_priority()
         {
             InitializeComponent();
             Column1Prepare();
@@ -65,7 +65,7 @@ namespace CollegeExamFreeReport
 
         private void BW_Progress(object sender, ProgressChangedEventArgs e)
         {
-            MotherForm.SetStatusBarMessage(Global.ReportName + "產生中", e.ProgressPercentage);
+            MotherForm.SetStatusBarMessage(Global.ReportName_priority + "產生中", e.ProgressPercentage);
         }
 
         private void Column1Prepare()
@@ -111,7 +111,7 @@ namespace CollegeExamFreeReport
 
         private void ReportBuilding(object sender, RunWorkerCompletedEventArgs e)
         {
-            MotherForm.SetStatusBarMessage(Global.ReportName + " 產生完成");
+            MotherForm.SetStatusBarMessage(Global.ReportName_priority + " 產生完成");
 
             EnableForm(true);
             Document doc = (Document)e.Result;
@@ -141,7 +141,7 @@ namespace CollegeExamFreeReport
             }
             SaveFileDialog sd = new SaveFileDialog();
             sd.Title = "另存新檔";
-            sd.FileName = Global.ReportName + ".doc";
+            sd.FileName = Global.ReportName_priority + ".doc";
             sd.Filter = "Word檔案 (*.doc)|*.doc|所有檔案 (*.*)|*.*";
             if (sd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -519,7 +519,7 @@ FROM
             //獎懲紀錄功過相抵
             foreach (StudentObj obj in studentDic.Values)
             {
-                obj.MeritDemeritTransfer();
+                obj.MeritDemeritTransfer_priority();
             }
 
             _BW.ReportProgress(60);
@@ -668,7 +668,7 @@ FROM
                 row["身分證字號"] = obj.IdNumber;
                 row["服務時數"] = obj.ServiceHours;
                 row["幹部紀錄"] = obj.CadreTimes;
-                row["服務學習"] = obj.ServiceHoursScore;
+                row["服務學習"] = obj.ServiceHoursScore_Priority;
                 row["處分紀錄"] = obj.HasDemeritAB ? "有" : "無";
 
                 // 功過相抵
@@ -698,7 +698,7 @@ FROM
                 row["健康與體育"] = dic.ContainsKey("健康與體育") ? dic["健康與體育"] : 0;
                 row["藝術與人文"] = dic.ContainsKey("藝術與人文") ? dic["藝術與人文"] : 0;
                 row["綜合活動"] = dic.ContainsKey("綜合活動") ? dic["綜合活動"] : 0;
-                row["均衡學習"] = obj.DomainItemScore;
+                row["均衡學習"] = obj.DomainItemScore_Priority;
 
                 string[] tags = CheckTagId(obj.TagIds);
                 row["對照身分"] = tags[0];
@@ -707,8 +707,8 @@ FROM
                 row["弱勢身分_總"] = row["弱勢身分"].ToString();
                 row["均衡學習_總"] = row["均衡學習"].ToString();
 
-                int score = obj.ServiceHoursScore + obj.MeritDemeritScore + obj.SportFitnessScore;
-                row["多元學習表現"] = (score > 16) ? 16 : score;
+                double score = obj.ServiceHoursScore_Priority;
+                row["多元學習表現"] = (score > 15) ? 15 : score;
                 data.Rows.Add(row);             
                 
                 count++;
@@ -754,7 +754,7 @@ FROM
             ConfigureMaker();
             SaveFileDialog sd = new SaveFileDialog();
             sd.Title = "另存新檔";
-            sd.FileName = Global.ReportName + "(範本).doc";
+            sd.FileName = Global.ReportName_priority + "(範本).doc";
             sd.Filter = "Word檔案 (*.doc)|*.doc|所有檔案 (*.*)|*.*";
             if (sd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -774,10 +774,10 @@ FROM
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             //ConfigureMaker();
-            List<Configure> Configures = _A.Select<Configure>();
+            List<Configure_priority> Configures = _A.Select<Configure_priority>();
             _A.DeletedValues(Configures);
 
-            _Configure = new Configure();
+            _Configure = new Configure_priority();
 
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Title = "上傳樣板";
@@ -801,7 +801,7 @@ FROM
         {
             if (MessageBox.Show("確認移除目前範本?", "ischool", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                List<Configure> Configures = _A.Select<Configure>();
+                List<Configure_priority> Configures = _A.Select<Configure_priority>();
 
                 if (Configures.Count > 0)
                     _A.DeletedValues(Configures);
@@ -812,7 +812,7 @@ FROM
 
         private void ConfigureMaker()
         {
-            List<Configure> Configures = _A.Select<Configure>();
+            List<Configure_priority> Configures = _A.Select<Configure_priority>();
 
             if (Configures.Count > 0)
             {
@@ -823,7 +823,7 @@ FROM
             }
             else
             {
-                _Configure = new Configure();
+                _Configure = new Configure_priority();
                 //TemplateSelecter selecter = new TemplateSelecter();
                 //selecter.ShowDialog();
                 //if (selecter.DialogResult == DialogResult.OK)
@@ -835,8 +835,8 @@ FROM
                 //    _Configure.Template = new Document(new MemoryStream(Properties.Resources.Template_南區));
                 //}
 
-                // 2018/05/10 穎驊新增， 整理後，五專免試入學 績分比序格式相同 不再分區
-                _Configure.Template = new Document(new MemoryStream(Properties.Resources.Template_不分區));
+                // 2018/05/13 穎驊新增，本報表 為 優先免試入學 規格略有不同
+                _Configure.Template = new Document(new MemoryStream(Properties.Resources.Template_優先));
 
                 _Configure.Encode();
                 _Configure.CheckUploadEpaper = chkUploadEPaper.Checked;
@@ -982,11 +982,11 @@ FROM
             }
 
             //讀取是否上傳電子報表設定檔
-            //List<Configure> _confList = _A.Select<Configure>();
+            List<Configure_priority> _confList = _A.Select<Configure_priority>();
 
-            //chkUploadEPaper.Checked = false;
-            //if (_confList.Count > 0)
-            //    chkUploadEPaper.Checked = _confList[0].CheckUploadEpaper;
+            chkUploadEPaper.Checked = false;
+            if (_confList.Count > 0)
+                chkUploadEPaper.Checked = _confList[0].CheckUploadEpaper;
 
         }
 
@@ -999,7 +999,7 @@ FROM
         {
             SaveFileDialog sd = new SaveFileDialog();
             sd.Title = "另存新檔";
-            sd.FileName = Global.ReportName + "(合併欄位).doc";
+            sd.FileName = Global.ReportName_priority + "(合併欄位).doc";
             sd.Filter = "Word檔案 (*.doc)|*.doc|所有檔案 (*.*)|*.*";
             if (sd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
