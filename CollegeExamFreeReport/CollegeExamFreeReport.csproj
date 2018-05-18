@@ -94,6 +94,18 @@
     <Compile Include="Configure_priority.cs" />
     <Compile Include="Configure.cs" />
     <Compile Include="Global.cs" />
+    <Compile Include="LeagleForm_priority.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LeagleForm_priority.Designer.cs">
+      <DependentUpon>LeagleForm_priority.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LeagleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LeagleForm.Designer.cs">
+      <DependentUpon>LeagleForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Permissions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -101,6 +113,18 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="QAForm_priority.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QAForm_priority.Designer.cs">
+      <DependentUpon>QAForm_priority.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QAForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QAForm.Designer.cs">
+      <DependentUpon>QAForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Report_priority.cs">
       <SubType>Form</SubType>
@@ -124,9 +148,21 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="LeagleForm_priority.resx">
+      <DependentUpon>LeagleForm_priority.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LeagleForm.resx">
+      <DependentUpon>LeagleForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QAForm_priority.resx">
+      <DependentUpon>QAForm_priority.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QAForm.resx">
+      <DependentUpon>QAForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Report_priority.resx">
       <DependentUpon>Report_priority.cs</DependentUpon>
@@ -159,6 +195,8 @@
     <Content Include="library\K12.BusinessLogic.dll" />
     <Content Include="library\K12.Data.dll" />
     <Content Include="library\K12.Presentation.dll" />
+    <Content Include="Resources\優先免試入學積分對照表_合併.png" />
+    <Content Include="Resources\北中南聯合免試入學積分對照表_合併.png" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

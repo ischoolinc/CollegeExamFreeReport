@@ -101,6 +101,26 @@ namespace CollegeExamFreeReport.Properties {
         }
         
         /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 優先免試入學積分對照表_合併 {
+            get {
+                object obj = ResourceManager.GetObject("優先免試入學積分對照表_合併", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查詢類型 System.Drawing.Bitmap 的當地語系化資源。
+        /// </summary>
+        internal static System.Drawing.Bitmap 北中南聯合免試入學積分對照表_合併 {
+            get {
+                object obj = ResourceManager.GetObject("北中南聯合免試入學積分對照表_合併", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   查詢類型 System.Byte[] 的當地語系化資源。
         /// </summary>
         internal static byte[] 合併欄位 {
