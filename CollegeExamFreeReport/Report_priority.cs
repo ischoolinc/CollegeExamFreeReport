@@ -71,8 +71,8 @@ namespace CollegeExamFreeReport
         private void Column1Prepare()
         {
             this.Column1.Items.Add("低收入戶");
-            this.Column1.Items.Add("中收入戶");
-            this.Column1.Items.Add("直系血親尊親屬支領失業給付");
+            this.Column1.Items.Add("中低收入戶");
+            this.Column1.Items.Add("支領失業給付");
             this.Column1.Items.Add("特殊境遇家庭");
         }
 
@@ -932,11 +932,29 @@ FROM
                 }
             }
 
+            //2018/12/21 穎驊修正
+            // 高雄教育局反映 分數計算有誤
+            // 檢查過後，發現當初 優先免試入學 是自 一般免試入學改過來
+            // 這邊的邏輯沒有改到，
+            // 現在的107法規 邏輯為 
+            // 具低收入戶身分 3分
+            // 具 中低收入戶、直系血親尊親屬支領失業給付、特殊境遇家庭子女身分 1.5分
+            // 若同時間具有多種身分，得則一計分
             string[] str = new string[2];
             if (retVal.Count > 0)
             {
-                str[0] = string.Join("、", retVal);
-                str[1] = "2";
+                if (retVal.Contains("低收入戶"))
+                {
+                    str[0] = "低收入戶";
+                    str[1] = "3";
+                }
+                else
+                {
+                    str[0] = retVal[0];
+                    str[1] = "1.5";
+                }
+
+                
             }
             else
             {
