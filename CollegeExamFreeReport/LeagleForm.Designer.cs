@@ -50,23 +50,23 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = global::CollegeExamFreeReport.Properties.Resources.北中南聯合免試入學積分對照表_合併;
-            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox1.Image = global::CollegeExamFreeReport.Properties.Resources._108北中南聯合免試入學積分對照表;
+            this.pictureBox1.Location = new System.Drawing.Point(3, 42);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(701, 1898);
+            this.pictureBox1.Size = new System.Drawing.Size(720, 2001);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
             // LeagleForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(740, 695);
             this.Controls.Add(this.panel1);
             this.DoubleBuffered = true;
             this.Name = "LeagleForm";
-            this.Text = "107年度聯合免試入學招生簡章規範";
+            this.Text = "聯合免試入學招生簡章規範";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

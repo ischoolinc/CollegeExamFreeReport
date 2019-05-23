@@ -28,21 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
+            this.linkLabel5 = new System.Windows.Forms.LinkLabel();
+            this.qaLb = new System.Windows.Forms.LinkLabel();
             this.linkLabel4 = new System.Windows.Forms.LinkLabel();
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
             this.dataGridViewX1 = new DevComponents.DotNetBar.Controls.DataGridViewX();
-            this.Column1 = new DevComponents.DotNetBar.Controls.DataGridViewComboBoxExColumn();
-            this.Column2 = new DevComponents.DotNetBar.Controls.DataGridViewComboBoxExColumn();
             this.chkUploadEPaper = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.dateTimeInput1 = new DevComponents.Editors.DateTimeAdv.DateTimeInput();
-            this.linkLabel5 = new System.Windows.Forms.LinkLabel();
-            this.qaLb = new System.Windows.Forms.LinkLabel();
+            this.Column1 = new DevComponents.DotNetBar.Controls.DataGridViewComboBoxExColumn();
+            this.Column2 = new DevComponents.DotNetBar.Controls.DataGridViewComboBoxExColumn();
             this.groupPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dateTimeInput1)).BeginInit();
@@ -96,12 +96,36 @@
             this.groupPanel1.TabIndex = 0;
             this.groupPanel1.Text = "報表設定";
             // 
+            // linkLabel5
+            // 
+            this.linkLabel5.AutoSize = true;
+            this.linkLabel5.BackColor = System.Drawing.Color.Transparent;
+            this.linkLabel5.Location = new System.Drawing.Point(122, 34);
+            this.linkLabel5.Name = "linkLabel5";
+            this.linkLabel5.Size = new System.Drawing.Size(78, 22);
+            this.linkLabel5.TabIndex = 41;
+            this.linkLabel5.TabStop = true;
+            this.linkLabel5.Text = "簡章規範";
+            this.linkLabel5.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel5_LinkClicked);
+            // 
+            // qaLb
+            // 
+            this.qaLb.AutoSize = true;
+            this.qaLb.BackColor = System.Drawing.Color.Transparent;
+            this.qaLb.Location = new System.Drawing.Point(4, 34);
+            this.qaLb.Name = "qaLb";
+            this.qaLb.Size = new System.Drawing.Size(146, 22);
+            this.qaLb.TabIndex = 40;
+            this.qaLb.TabStop = true;
+            this.qaLb.Text = "系統積分計算規則";
+            this.qaLb.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.qaLb_LinkClicked);
+            // 
             // linkLabel4
             // 
             this.linkLabel4.AutoSize = true;
             this.linkLabel4.Location = new System.Drawing.Point(269, 1);
             this.linkLabel4.Name = "linkLabel4";
-            this.linkLabel4.Size = new System.Drawing.Size(112, 17);
+            this.linkLabel4.Size = new System.Drawing.Size(146, 22);
             this.linkLabel4.TabIndex = 2;
             this.linkLabel4.TabStop = true;
             this.linkLabel4.Text = "檢視合併欄位總表";
@@ -112,7 +136,7 @@
             this.linkLabel3.AutoSize = true;
             this.linkLabel3.Location = new System.Drawing.Point(198, 1);
             this.linkLabel3.Name = "linkLabel3";
-            this.linkLabel3.Size = new System.Drawing.Size(60, 17);
+            this.linkLabel3.Size = new System.Drawing.Size(78, 22);
             this.linkLabel3.TabIndex = 1;
             this.linkLabel3.TabStop = true;
             this.linkLabel3.Text = "移除範本";
@@ -123,7 +147,7 @@
             this.linkLabel2.AutoSize = true;
             this.linkLabel2.Location = new System.Drawing.Point(101, 1);
             this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(86, 17);
+            this.linkLabel2.Size = new System.Drawing.Size(112, 22);
             this.linkLabel2.TabIndex = 0;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "上傳自訂範本";
@@ -134,7 +158,7 @@
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Location = new System.Drawing.Point(4, 1);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(86, 17);
+            this.linkLabel1.Size = new System.Drawing.Size(112, 22);
             this.linkLabel1.TabIndex = 3;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "檢視目前範本";
@@ -164,50 +188,20 @@
             this.dataGridViewX1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
             this.Column2});
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("微軟正黑體", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridViewX1.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewX1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
             this.dataGridViewX1.Location = new System.Drawing.Point(13, 44);
             this.dataGridViewX1.Name = "dataGridViewX1";
             this.dataGridViewX1.RowTemplate.Height = 24;
             this.dataGridViewX1.Size = new System.Drawing.Size(608, 369);
             this.dataGridViewX1.TabIndex = 0;
-            // 
-            // Column1
-            // 
-            this.Column1.DisplayMember = "Text";
-            this.Column1.DropDownHeight = 106;
-            this.Column1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.Column1.DropDownWidth = 121;
-            this.Column1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Column1.HeaderText = "弱勢身分";
-            this.Column1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.Column1.IntegralHeight = false;
-            this.Column1.ItemHeight = 17;
-            this.Column1.Name = "Column1";
-            this.Column1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.Column1.Width = 208;
-            // 
-            // Column2
-            // 
-            this.Column2.DisplayMember = "Text";
-            this.Column2.DropDownHeight = 106;
-            this.Column2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.Column2.DropDownWidth = 121;
-            this.Column2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Column2.HeaderText = "對照類別";
-            this.Column2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.Column2.IntegralHeight = false;
-            this.Column2.ItemHeight = 17;
-            this.Column2.Name = "Column2";
-            this.Column2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.Column2.Width = 220;
             // 
             // chkUploadEPaper
             // 
@@ -221,7 +215,7 @@
             this.chkUploadEPaper.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
             this.chkUploadEPaper.Location = new System.Drawing.Point(474, 14);
             this.chkUploadEPaper.Name = "chkUploadEPaper";
-            this.chkUploadEPaper.Size = new System.Drawing.Size(147, 21);
+            this.chkUploadEPaper.Size = new System.Drawing.Size(179, 26);
             this.chkUploadEPaper.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.chkUploadEPaper.TabIndex = 2;
             this.chkUploadEPaper.Text = "列印並上傳電子報表";
@@ -289,37 +283,43 @@
             this.dateTimeInput1.MonthCalendar.TodayButtonVisible = true;
             this.dateTimeInput1.MonthCalendar.WeeklyMarkedDays = new System.DayOfWeek[0];
             this.dateTimeInput1.Name = "dateTimeInput1";
-            this.dateTimeInput1.Size = new System.Drawing.Size(157, 25);
+            this.dateTimeInput1.Size = new System.Drawing.Size(157, 29);
             this.dateTimeInput1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.dateTimeInput1.TabIndex = 4;
             // 
-            // linkLabel5
+            // Column1
             // 
-            this.linkLabel5.AutoSize = true;
-            this.linkLabel5.BackColor = System.Drawing.Color.Transparent;
-            this.linkLabel5.Location = new System.Drawing.Point(122, 34);
-            this.linkLabel5.Name = "linkLabel5";
-            this.linkLabel5.Size = new System.Drawing.Size(110, 17);
-            this.linkLabel5.TabIndex = 41;
-            this.linkLabel5.TabStop = true;
-            this.linkLabel5.Text = "107年度簡章規範";
-            this.linkLabel5.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel5_LinkClicked);
+            this.Column1.DisplayMember = "Text";
+            this.Column1.DropDownHeight = 106;
+            this.Column1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Column1.DropDownWidth = 121;
+            this.Column1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Column1.HeaderText = "弱勢身分";
+            this.Column1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.Column1.IntegralHeight = false;
+            this.Column1.ItemHeight = 17;
+            this.Column1.Name = "Column1";
+            this.Column1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.Column1.Width = 208;
             // 
-            // qaLb
+            // Column2
             // 
-            this.qaLb.AutoSize = true;
-            this.qaLb.BackColor = System.Drawing.Color.Transparent;
-            this.qaLb.Location = new System.Drawing.Point(4, 34);
-            this.qaLb.Name = "qaLb";
-            this.qaLb.Size = new System.Drawing.Size(112, 17);
-            this.qaLb.TabIndex = 40;
-            this.qaLb.TabStop = true;
-            this.qaLb.Text = "系統積分計算規則";
-            this.qaLb.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.qaLb_LinkClicked);
+            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column2.DisplayMember = "Text";
+            this.Column2.DropDownHeight = 106;
+            this.Column2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Column2.DropDownWidth = 121;
+            this.Column2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Column2.HeaderText = "對照類別";
+            this.Column2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.Column2.IntegralHeight = false;
+            this.Column2.ItemHeight = 17;
+            this.Column2.Name = "Column2";
+            this.Column2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             // 
             // Report
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(630, 509);
             this.Controls.Add(this.dateTimeInput1);
@@ -330,7 +330,7 @@
             this.Controls.Add(this.groupPanel1);
             this.DoubleBuffered = true;
             this.Name = "Report";
-            this.Text = "超額比序項目積分證明單";
+            this.Text = "超額比序項目積分證明單(一般免試入學)";
             this.Load += new System.EventHandler(this.Report_Load);
             this.groupPanel1.ResumeLayout(false);
             this.groupPanel1.PerformLayout();
@@ -350,12 +350,12 @@
         private System.Windows.Forms.LinkLabel linkLabel1;
         private DevComponents.DotNetBar.ButtonX buttonX1;
         private DevComponents.DotNetBar.Controls.DataGridViewX dataGridViewX1;
-        private DevComponents.DotNetBar.Controls.DataGridViewComboBoxExColumn Column1;
-        private DevComponents.DotNetBar.Controls.DataGridViewComboBoxExColumn Column2;
         private DevComponents.DotNetBar.Controls.CheckBoxX chkUploadEPaper;
         private DevComponents.DotNetBar.LabelX labelX1;
         private DevComponents.Editors.DateTimeAdv.DateTimeInput dateTimeInput1;
         private System.Windows.Forms.LinkLabel linkLabel5;
         private System.Windows.Forms.LinkLabel qaLb;
+        private DevComponents.DotNetBar.Controls.DataGridViewComboBoxExColumn Column1;
+        private DevComponents.DotNetBar.Controls.DataGridViewComboBoxExColumn Column2;
     }
 }

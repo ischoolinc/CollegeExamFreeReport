@@ -195,8 +195,8 @@
     <Content Include="library\K12.BusinessLogic.dll" />
     <Content Include="library\K12.Data.dll" />
     <Content Include="library\K12.Presentation.dll" />
-    <Content Include="Resources\優先免試入學積分對照表_合併.png" />
-    <Content Include="Resources\北中南聯合免試入學積分對照表_合併.png" />
+    <None Include="Resources\108北中南聯合免試入學積分對照表.png" />
+    <None Include="Resources\108學年度五專優先免試入學超額比序積分規則.png" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

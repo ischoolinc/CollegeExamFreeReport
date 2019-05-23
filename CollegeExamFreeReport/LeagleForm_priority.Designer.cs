@@ -50,23 +50,23 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Image = global::CollegeExamFreeReport.Properties.Resources.優先免試入學積分對照表_合併;
+            this.pictureBox1.Image = global::CollegeExamFreeReport.Properties.Resources._108學年度五專優先免試入學超額比序積分規則;
             this.pictureBox1.Location = new System.Drawing.Point(3, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(744, 1034);
+            this.pictureBox1.Size = new System.Drawing.Size(719, 997);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
             // LeagleForm_priority
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(802, 695);
             this.Controls.Add(this.panel1);
             this.DoubleBuffered = true;
             this.Name = "LeagleForm_priority";
-            this.Text = "107年度五專優先免試入學招生簡章";
+            this.Text = "五專優先免試入學招生簡章";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

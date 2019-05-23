@@ -130,11 +130,11 @@
   <data name="Template_南區" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Template_南區.doc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="優先免試入學積分對照表_合併" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\優先免試入學積分對照表_合併.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="_108北中南聯合免試入學積分對照表" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\108北中南聯合免試入學積分對照表.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="北中南聯合免試入學積分對照表_合併" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\北中南聯合免試入學積分對照表_合併.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="_108學年度五專優先免試入學超額比序積分規則" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\108學年度五專優先免試入學超額比序積分規則.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="合併欄位" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\合併欄位.doc;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
