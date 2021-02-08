@@ -38,11 +38,11 @@
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.buttonX1 = new DevComponents.DotNetBar.ButtonX();
             this.dataGridViewX1 = new DevComponents.DotNetBar.Controls.DataGridViewX();
+            this.Column1 = new DevComponents.DotNetBar.Controls.DataGridViewComboBoxExColumn();
+            this.Column2 = new DevComponents.DotNetBar.Controls.DataGridViewComboBoxExColumn();
             this.chkUploadEPaper = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.dateTimeInput1 = new DevComponents.Editors.DateTimeAdv.DateTimeInput();
-            this.Column1 = new DevComponents.DotNetBar.Controls.DataGridViewComboBoxExColumn();
-            this.Column2 = new DevComponents.DotNetBar.Controls.DataGridViewComboBoxExColumn();
             this.groupPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dateTimeInput1)).BeginInit();
@@ -199,9 +199,42 @@
             this.dataGridViewX1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(215)))), ((int)(((byte)(229)))));
             this.dataGridViewX1.Location = new System.Drawing.Point(13, 44);
             this.dataGridViewX1.Name = "dataGridViewX1";
+            this.dataGridViewX1.RowHeadersWidth = 51;
             this.dataGridViewX1.RowTemplate.Height = 24;
             this.dataGridViewX1.Size = new System.Drawing.Size(608, 369);
             this.dataGridViewX1.TabIndex = 0;
+            // 
+            // Column1
+            // 
+            this.Column1.DisplayMember = "Text";
+            this.Column1.DropDownHeight = 106;
+            this.Column1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Column1.DropDownWidth = 121;
+            this.Column1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Column1.HeaderText = "弱勢身分";
+            this.Column1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.Column1.IntegralHeight = false;
+            this.Column1.ItemHeight = 17;
+            this.Column1.MinimumWidth = 6;
+            this.Column1.Name = "Column1";
+            this.Column1.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.Column1.Width = 208;
+            // 
+            // Column2
+            // 
+            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column2.DisplayMember = "Text";
+            this.Column2.DropDownHeight = 106;
+            this.Column2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.Column2.DropDownWidth = 121;
+            this.Column2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Column2.HeaderText = "對照類別";
+            this.Column2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.Column2.IntegralHeight = false;
+            this.Column2.ItemHeight = 17;
+            this.Column2.MinimumWidth = 6;
+            this.Column2.Name = "Column2";
+            this.Column2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             // 
             // chkUploadEPaper
             // 
@@ -287,36 +320,6 @@
             this.dateTimeInput1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.dateTimeInput1.TabIndex = 4;
             // 
-            // Column1
-            // 
-            this.Column1.DisplayMember = "Text";
-            this.Column1.DropDownHeight = 106;
-            this.Column1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.Column1.DropDownWidth = 121;
-            this.Column1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Column1.HeaderText = "弱勢身分";
-            this.Column1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.Column1.IntegralHeight = false;
-            this.Column1.ItemHeight = 17;
-            this.Column1.Name = "Column1";
-            this.Column1.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.Column1.Width = 208;
-            // 
-            // Column2
-            // 
-            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column2.DisplayMember = "Text";
-            this.Column2.DropDownHeight = 106;
-            this.Column2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.Column2.DropDownWidth = 121;
-            this.Column2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Column2.HeaderText = "對照類別";
-            this.Column2.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.Column2.IntegralHeight = false;
-            this.Column2.ItemHeight = 17;
-            this.Column2.Name = "Column2";
-            this.Column2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            // 
             // Report
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
@@ -330,7 +333,7 @@
             this.Controls.Add(this.groupPanel1);
             this.DoubleBuffered = true;
             this.Name = "Report";
-            this.Text = "超額比序項目積分證明單(一般免試入學)";
+            this.Text = "超額比序項目積分證明單(聯合免試入學)";
             this.Load += new System.EventHandler(this.Report_Load);
             this.groupPanel1.ResumeLayout(false);
             this.groupPanel1.PerformLayout();
