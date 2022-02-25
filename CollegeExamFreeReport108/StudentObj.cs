@@ -167,6 +167,7 @@ namespace CollegeExamFreeReport108
                 //int score = (int)(ServiceHours / 8);
                 //score += CadreTimes;
                 int score = (int)(ServiceHours / 4);
+                score += CadreTimes;
 
                 if (score > 7)
                     score = 7;
@@ -186,6 +187,7 @@ namespace CollegeExamFreeReport108
                 //double score = (double)(ServiceHours) *0.25;
                 //score += CadreTimes*2;
                 decimal score = (int)(ServiceHours) *0.5m;
+                score += CadreTimes * 2;
 
                 if (score > 15)
                     score = 15;
