@@ -14,9 +14,10 @@ namespace CollegeExamFreeReport108
         public static void main()
         {
             //2021-12-07 Cynthia 因108課綱直接切出一版使用
+            // 2022-04-14 Cynthia依照高雄小組要求，將報表改為「五專免試入學相關報表」
             FISCA.Presentation.RibbonBarItem item1 = FISCA.Presentation.MotherForm.RibbonBarItems["學生", "資料統計"];
-            item1["報表"]["成績相關報表"]["五專(優先)免試入學相關報表"]["超額比序項目積分證明單(聯合免試入學)-108課綱適用"].Enable = false;
-            item1["報表"]["成績相關報表"]["五專(優先)免試入學相關報表"]["超額比序項目積分證明單(聯合免試入學)-108課綱適用"].Click += delegate
+            item1["報表"]["成績相關報表"]["五專免試入學相關報表"]["超額比序項目積分證明單(聯合免試入學)-108課綱適用"].Enable = false;
+            item1["報表"]["成績相關報表"]["五專免試入學相關報表"]["超額比序項目積分證明單(聯合免試入學)-108課綱適用"].Click += delegate
             {
                 Report report = new Report();
                 report.ShowDialog();
@@ -26,17 +27,17 @@ namespace CollegeExamFreeReport108
             {
                 if (K12.Presentation.NLDPanels.Student.SelectedSource.Count > 0 && Permissions.超額比序項目積分證明單權限_聯合免試入學108)
                 {
-                    item1["報表"]["成績相關報表"]["五專(優先)免試入學相關報表"]["超額比序項目積分證明單(聯合免試入學)-108課綱適用"].Enable = true;
+                    item1["報表"]["成績相關報表"]["五專免試入學相關報表"]["超額比序項目積分證明單(聯合免試入學)-108課綱適用"].Enable = true;
                 }
                 else
                 {
-                    item1["報表"]["成績相關報表"]["五專(優先)免試入學相關報表"]["超額比序項目積分證明單(聯合免試入學)-108課綱適用"].Enable = false;
+                    item1["報表"]["成績相關報表"]["五專免試入學相關報表"]["超額比序項目積分證明單(聯合免試入學)-108課綱適用"].Enable = false;
                 }
             };
 
 
-            item1["報表"]["成績相關報表"]["五專(優先)免試入學相關報表"]["超額比序項目積分證明單(優先免試入學)-108課綱適用"].Enable = false;
-            item1["報表"]["成績相關報表"]["五專(優先)免試入學相關報表"]["超額比序項目積分證明單(優先免試入學)-108課綱適用"].Click += delegate
+            item1["報表"]["成績相關報表"]["五專免試入學相關報表"]["超額比序項目積分證明單(優先免試入學)-108課綱適用"].Enable = false;
+            item1["報表"]["成績相關報表"]["五專免試入學相關報表"]["超額比序項目積分證明單(優先免試入學)-108課綱適用"].Click += delegate
             {
                 Report_priority report = new Report_priority();
                 report.ShowDialog();
@@ -46,11 +47,11 @@ namespace CollegeExamFreeReport108
             {
                 if (K12.Presentation.NLDPanels.Student.SelectedSource.Count > 0 && Permissions.超額比序項目積分證明單權限_優先免試入學108)
                 {
-                    item1["報表"]["成績相關報表"]["五專(優先)免試入學相關報表"]["超額比序項目積分證明單(優先免試入學)-108課綱適用"].Enable = true;
+                    item1["報表"]["成績相關報表"]["五專免試入學相關報表"]["超額比序項目積分證明單(優先免試入學)-108課綱適用"].Enable = true;
                 }
                 else
                 {
-                    item1["報表"]["成績相關報表"]["五專(優先)免試入學相關報表"]["超額比序項目積分證明單(優先免試入學)-108課綱適用"].Enable = false;
+                    item1["報表"]["成績相關報表"]["五專免試入學相關報表"]["超額比序項目積分證明單(優先免試入學)-108課綱適用"].Enable = false;
                 }
             };
 
