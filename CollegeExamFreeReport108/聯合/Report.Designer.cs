@@ -1,6 +1,6 @@
 ﻿namespace CollegeExamFreeReport108
 {
-    partial class Report_priority
+    partial class Report
     {
         /// <summary>
         /// Required designer variable.
@@ -30,8 +30,6 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.groupPanel1 = new DevComponents.DotNetBar.Controls.GroupPanel();
-            this.linkLabel5 = new System.Windows.Forms.LinkLabel();
-            this.qaLb = new System.Windows.Forms.LinkLabel();
             this.linkLabel4 = new System.Windows.Forms.LinkLabel();
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
@@ -43,6 +41,7 @@
             this.chkUploadEPaper = new DevComponents.DotNetBar.Controls.CheckBoxX();
             this.labelX1 = new DevComponents.DotNetBar.LabelX();
             this.dateTimeInput1 = new DevComponents.Editors.DateTimeAdv.DateTimeInput();
+            this.btnExit = new DevComponents.DotNetBar.ButtonX();
             this.groupPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewX1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dateTimeInput1)).BeginInit();
@@ -50,19 +49,18 @@
             // 
             // groupPanel1
             // 
-            this.groupPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.groupPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupPanel1.BackColor = System.Drawing.Color.Transparent;
             this.groupPanel1.CanvasColor = System.Drawing.SystemColors.Control;
             this.groupPanel1.ColorSchemeStyle = DevComponents.DotNetBar.eDotNetBarStyle.Office2007;
-            this.groupPanel1.Controls.Add(this.linkLabel5);
-            this.groupPanel1.Controls.Add(this.qaLb);
             this.groupPanel1.Controls.Add(this.linkLabel4);
             this.groupPanel1.Controls.Add(this.linkLabel3);
             this.groupPanel1.Controls.Add(this.linkLabel2);
             this.groupPanel1.Controls.Add(this.linkLabel1);
-            this.groupPanel1.Location = new System.Drawing.Point(13, 333);
+            this.groupPanel1.Location = new System.Drawing.Point(13, 419);
             this.groupPanel1.Name = "groupPanel1";
-            this.groupPanel1.Size = new System.Drawing.Size(477, 77);
+            this.groupPanel1.Size = new System.Drawing.Size(431, 78);
             // 
             // 
             // 
@@ -96,40 +94,12 @@
             this.groupPanel1.TabIndex = 0;
             this.groupPanel1.Text = "報表設定";
             // 
-            // linkLabel5
-            // 
-            this.linkLabel5.AutoSize = true;
-            this.linkLabel5.BackColor = System.Drawing.Color.Transparent;
-            this.linkLabel5.Enabled = false;
-            this.linkLabel5.Location = new System.Drawing.Point(122, 30);
-            this.linkLabel5.Name = "linkLabel5";
-            this.linkLabel5.Size = new System.Drawing.Size(78, 22);
-            this.linkLabel5.TabIndex = 43;
-            this.linkLabel5.TabStop = true;
-            this.linkLabel5.Text = "簡章規範";
-            this.linkLabel5.Visible = false;
-            this.linkLabel5.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel5_LinkClicked);
-            // 
-            // qaLb
-            // 
-            this.qaLb.AutoSize = true;
-            this.qaLb.BackColor = System.Drawing.Color.Transparent;
-            this.qaLb.Enabled = false;
-            this.qaLb.Location = new System.Drawing.Point(4, 30);
-            this.qaLb.Name = "qaLb";
-            this.qaLb.Size = new System.Drawing.Size(146, 22);
-            this.qaLb.TabIndex = 42;
-            this.qaLb.TabStop = true;
-            this.qaLb.Text = "系統積分計算規則";
-            this.qaLb.Visible = false;
-            this.qaLb.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.qaLb_LinkClicked);
-            // 
             // linkLabel4
             // 
             this.linkLabel4.AutoSize = true;
-            this.linkLabel4.Location = new System.Drawing.Point(269, 1);
+            this.linkLabel4.Location = new System.Drawing.Point(289, 17);
             this.linkLabel4.Name = "linkLabel4";
-            this.linkLabel4.Size = new System.Drawing.Size(146, 22);
+            this.linkLabel4.Size = new System.Drawing.Size(112, 17);
             this.linkLabel4.TabIndex = 2;
             this.linkLabel4.TabStop = true;
             this.linkLabel4.Text = "檢視合併欄位總表";
@@ -138,9 +108,9 @@
             // linkLabel3
             // 
             this.linkLabel3.AutoSize = true;
-            this.linkLabel3.Location = new System.Drawing.Point(198, 1);
+            this.linkLabel3.Location = new System.Drawing.Point(218, 17);
             this.linkLabel3.Name = "linkLabel3";
-            this.linkLabel3.Size = new System.Drawing.Size(78, 22);
+            this.linkLabel3.Size = new System.Drawing.Size(60, 17);
             this.linkLabel3.TabIndex = 1;
             this.linkLabel3.TabStop = true;
             this.linkLabel3.Text = "移除範本";
@@ -149,9 +119,9 @@
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(101, 1);
+            this.linkLabel2.Location = new System.Drawing.Point(121, 17);
             this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(112, 22);
+            this.linkLabel2.Size = new System.Drawing.Size(86, 17);
             this.linkLabel2.TabIndex = 0;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "上傳自訂範本";
@@ -160,9 +130,9 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(4, 1);
+            this.linkLabel1.Location = new System.Drawing.Point(24, 17);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(112, 22);
+            this.linkLabel1.Size = new System.Drawing.Size(86, 17);
             this.linkLabel1.TabIndex = 3;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "檢視目前範本";
@@ -174,7 +144,7 @@
             this.buttonX1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonX1.BackColor = System.Drawing.Color.Transparent;
             this.buttonX1.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
-            this.buttonX1.Location = new System.Drawing.Point(535, 387);
+            this.buttonX1.Location = new System.Drawing.Point(461, 471);
             this.buttonX1.Name = "buttonX1";
             this.buttonX1.Size = new System.Drawing.Size(75, 23);
             this.buttonX1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
@@ -205,7 +175,7 @@
             this.dataGridViewX1.Name = "dataGridViewX1";
             this.dataGridViewX1.RowHeadersWidth = 51;
             this.dataGridViewX1.RowTemplate.Height = 24;
-            this.dataGridViewX1.Size = new System.Drawing.Size(600, 283);
+            this.dataGridViewX1.Size = new System.Drawing.Size(608, 369);
             this.dataGridViewX1.TabIndex = 0;
             // 
             // Column1
@@ -250,9 +220,9 @@
             // 
             this.chkUploadEPaper.BackgroundStyle.Class = "";
             this.chkUploadEPaper.BackgroundStyle.CornerType = DevComponents.DotNetBar.eCornerType.Square;
-            this.chkUploadEPaper.Location = new System.Drawing.Point(466, 14);
+            this.chkUploadEPaper.Location = new System.Drawing.Point(474, 14);
             this.chkUploadEPaper.Name = "chkUploadEPaper";
-            this.chkUploadEPaper.Size = new System.Drawing.Size(179, 26);
+            this.chkUploadEPaper.Size = new System.Drawing.Size(147, 21);
             this.chkUploadEPaper.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.chkUploadEPaper.TabIndex = 2;
             this.chkUploadEPaper.Text = "列印並上傳電子報表";
@@ -320,15 +290,30 @@
             this.dateTimeInput1.MonthCalendar.TodayButtonVisible = true;
             this.dateTimeInput1.MonthCalendar.WeeklyMarkedDays = new System.DayOfWeek[0];
             this.dateTimeInput1.Name = "dateTimeInput1";
-            this.dateTimeInput1.Size = new System.Drawing.Size(157, 29);
+            this.dateTimeInput1.Size = new System.Drawing.Size(157, 25);
             this.dateTimeInput1.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
             this.dateTimeInput1.TabIndex = 4;
             // 
-            // Report_priority
+            // btnExit
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
+            this.btnExit.AccessibleRole = System.Windows.Forms.AccessibleRole.PushButton;
+            this.btnExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnExit.BackColor = System.Drawing.Color.Transparent;
+            this.btnExit.ColorTable = DevComponents.DotNetBar.eButtonColor.OrangeWithBackground;
+            this.btnExit.Location = new System.Drawing.Point(543, 471);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new System.Drawing.Size(75, 23);
+            this.btnExit.Style = DevComponents.DotNetBar.eDotNetBarStyle.StyleManagerControlled;
+            this.btnExit.TabIndex = 12;
+            this.btnExit.Text = "離開";
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            // 
+            // Report
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(622, 422);
+            this.ClientSize = new System.Drawing.Size(630, 509);
+            this.Controls.Add(this.btnExit);
             this.Controls.Add(this.dateTimeInput1);
             this.Controls.Add(this.labelX1);
             this.Controls.Add(this.chkUploadEPaper);
@@ -336,8 +321,8 @@
             this.Controls.Add(this.buttonX1);
             this.Controls.Add(this.groupPanel1);
             this.DoubleBuffered = true;
-            this.Name = "Report_priority";
-            this.Text = "超額比序項目積分證明單(優先免試入學)";
+            this.Name = "Report";
+            this.Text = "超額比序項目積分證明單(聯合免試入學)";
             this.Load += new System.EventHandler(this.Report_Load);
             this.groupPanel1.ResumeLayout(false);
             this.groupPanel1.PerformLayout();
@@ -360,9 +345,8 @@
         private DevComponents.DotNetBar.Controls.CheckBoxX chkUploadEPaper;
         private DevComponents.DotNetBar.LabelX labelX1;
         private DevComponents.Editors.DateTimeAdv.DateTimeInput dateTimeInput1;
-        private System.Windows.Forms.LinkLabel linkLabel5;
-        private System.Windows.Forms.LinkLabel qaLb;
         private DevComponents.DotNetBar.Controls.DataGridViewComboBoxExColumn Column1;
         private DevComponents.DotNetBar.Controls.DataGridViewComboBoxExColumn Column2;
+        private DevComponents.DotNetBar.ButtonX btnExit;
     }
 }
