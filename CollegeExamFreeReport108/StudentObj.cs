@@ -63,7 +63,7 @@ namespace CollegeExamFreeReport108
         /// <summary>
         /// 聯合均衡學習：每一個領域滿60分得2分，上限6分。(2021-12 Cynthia)
         /// </summary>
-        /// https://3.basecamp.com/4399967/buckets/15852426/todos/4417454620
+        /// https://3.basecamp.com/4399967/buckets/15852426/todos/6692639656   2023/10/26
         public int DomainItemScore
         {
             get
@@ -204,7 +204,7 @@ namespace CollegeExamFreeReport108
         }
 
         /// <summary>
-        /// 聯合免試 服務時數：4小時1分，上限7分 (2021-12 Cynthia)
+        /// 聯合服務時數：8小時1分，上限7分,old:4小時1分，上限7分
         /// </summary>
         /// https://3.basecamp.com/4399967/buckets/15852426/todos/6692639656   2023/10/26
         public int ServiceHoursScore
@@ -224,7 +224,7 @@ namespace CollegeExamFreeReport108
         }
 
         /// <summary>
-        /// 優先免試 服務學習: 每1小時0.5分，上限15分 (2021-12 Cynthia)
+        /// 優先服務學習: 每1小時0.25分，上限15分，old:每1小時0.5分，上限15分。
         /// </summary>
         /// https://3.basecamp.com/4399967/buckets/15852426/todos/4417454620
         public decimal ServiceHoursScore_Priority
@@ -247,13 +247,11 @@ namespace CollegeExamFreeReport108
         /// 完全免試 服務學習: 每1小時0.5分，上限15分 (2024-8 Dylan)
         /// </summary>
         /// https://3.basecamp.com/4399967/buckets/15852426/todos/7221323792
-        public double ServiceHours_Completely
+        public decimal ServiceHours_Completely
         {
             get
             {
-                //double score = (double)(ServiceHours) *0.25;
-                //score += CadreTimes*2;
-                double score = (double)(ServiceHours) *0.5;
+                decimal score = (int)(ServiceHours) *0.5m;
                 score += CadreTimes * 2;
 
                 if (score > 15)
