@@ -157,7 +157,54 @@ namespace CollegeExamFreeReport108
         }
 
         /// <summary>
-        /// 聯合服務時數：4小時1分，上限7分 (2021-12 Cynthia)
+        /// 完全免試 均衡學習：每一個領域滿60分得7分，上限28分。(2024-4 Dylan)
+        /// </summary>
+        public int DomainItemScore_Completely
+        {
+            get
+            {
+                int score = 0;
+
+                if (domainAverageScores.ContainsKey("健康與體育"))
+                {
+                    if (domainAverageScores["健康與體育"] >= 60)
+                    {
+                        score += 7;
+                    }
+                }
+
+                if (domainAverageScores.ContainsKey("科技"))
+                {
+                    if (domainAverageScores["科技"] >= 60)
+                    {
+                        score += 7;
+                    }
+                }
+
+                if (domainAverageScores.ContainsKey("藝術"))
+                {
+                    if (domainAverageScores["藝術"] >= 60)
+                    {
+                        score += 7;
+                    }
+                }
+
+                if (domainAverageScores.ContainsKey("綜合活動"))
+                {
+                    if (domainAverageScores["綜合活動"] >= 60)
+                    {
+                        score += 7;
+                    }
+                }
+                if (score > 28)
+                    score = 28;
+
+                return score;
+            }
+        }
+
+        /// <summary>
+        /// 聯合免試 服務時數：4小時1分，上限7分 (2021-12 Cynthia)
         /// </summary>
         /// https://3.basecamp.com/4399967/buckets/15852426/todos/4417454620
         public int ServiceHoursScore
@@ -177,7 +224,7 @@ namespace CollegeExamFreeReport108
         }
 
         /// <summary>
-        /// 優先服務學習: 每1小時0.5分，上限15分 (2021-12 Cynthia)
+        /// 優先免試 服務學習: 每1小時0.5分，上限15分 (2021-12 Cynthia)
         /// </summary>
         /// https://3.basecamp.com/4399967/buckets/15852426/todos/4417454620
         public decimal ServiceHoursScore_Priority
@@ -187,6 +234,26 @@ namespace CollegeExamFreeReport108
                 //double score = (double)(ServiceHours) *0.25;
                 //score += CadreTimes*2;
                 decimal score = (int)(ServiceHours) *0.5m;
+                score += CadreTimes * 2;
+
+                if (score > 15)
+                    score = 15;
+
+                return score;
+            }
+        }
+
+        /// <summary>
+        /// 完全免試 服務學習: 每1小時0.5分，上限15分 (2024-8 Dylan)
+        /// </summary>
+        /// https://3.basecamp.com/4399967/buckets/15852426/todos/7221323792
+        public double ServiceHours_Completely
+        {
+            get
+            {
+                //double score = (double)(ServiceHours) *0.25;
+                //score += CadreTimes*2;
+                double score = (double)(ServiceHours) *0.5;
                 score += CadreTimes * 2;
 
                 if (score > 15)
@@ -399,6 +466,45 @@ namespace CollegeExamFreeReport108
             }
         }
 
+        public void MeritDemeritTransfer_Completely()
+        {
+            int merit = ((MeritA * Report_Completely.MAB) + MeritB) * Report_Completely.MBC + MeritC;
+            int demerit = ((DemeritA * Report_Completely.DAB) + DemeritB) * Report_Completely.DBC + DemeritC;
+
+            int total = merit - demerit;
+
+            if (total > 0)
+            {
+                MC = total % Report_Completely.MBC;
+                MB = (total / Report_Completely.MBC) % Report_Completely.MAB;
+                MA = (total / Report_Completely.MBC) / Report_Completely.MAB;
+                /*
+                //最小單位先存起來
+                MC = total;
+
+                //原始紀錄有大功或小功必須先轉換一次
+                if (MeritA > 0 || MeritB > 0)
+                {
+                    MB = MC / Report.MBC;
+                    MC = MC % Report.MBC;
+                }
+
+                //原始紀錄有大功再轉一次
+                if (MeritA > 0)
+                {
+                    MA = MB / Report.MAB;
+                    MB = MB % Report.MAB;
+                }
+                 * */
+            }
+            else if (total < 0)
+            {
+                total *= -1;
+                DC = total % Report_Completely.DBC;
+                DB = (total / Report_Completely.DBC) % Report_Completely.DAB;
+                DA = (total / Report_Completely.DBC) / Report_Completely.DAB;
+            }
+        }
         public StudentObj(DataRow row)
         {
             this.Id = row["id"].ToString();

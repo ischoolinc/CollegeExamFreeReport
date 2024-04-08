@@ -1,10 +1,10 @@
 ﻿using Aspose.Words;
+using Campus.ePaper;
 using FISCA.Data;
 using FISCA.Presentation;
 using FISCA.Presentation.Controls;
 using FISCA.UDT;
 using JHSchool.Data;
-using K12.BusinessLogic;
 using K12.Data;
 using System;
 using System.Collections.Generic;
@@ -16,13 +16,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Campus.ePaper;
 
 namespace CollegeExamFreeReport108
 {
-    public partial class Report : BaseForm
+    public partial class Report_Completely : BaseForm
     {
-        Configure _Configure;
+        Configure_Completely _Configure;
         AccessHelper _A = new AccessHelper();
         QueryHelper _Q = new QueryHelper();
         BackgroundWorker _BW;
@@ -34,7 +33,7 @@ namespace CollegeExamFreeReport108
         //功過換算比例
         public static int MAB, MBC, DAB, DBC;
 
-        public Report()
+        public Report_Completely()
         {
             InitializeComponent();
             Column1Prepare();
@@ -65,14 +64,14 @@ namespace CollegeExamFreeReport108
 
         private void BW_Progress(object sender, ProgressChangedEventArgs e)
         {
-            MotherForm.SetStatusBarMessage(Global.ReportName + "產生中", e.ProgressPercentage);
+            MotherForm.SetStatusBarMessage(Global.ReportName_Completely + "產生中", e.ProgressPercentage);
         }
 
         private void Column1Prepare()
         {
             this.Column1.Items.Add("低收入戶");
-            this.Column1.Items.Add("中收入戶");
-            this.Column1.Items.Add("直系血親尊親屬支領失業給付");
+            this.Column1.Items.Add("中低收入戶");
+            this.Column1.Items.Add("支領失業給付");
             this.Column1.Items.Add("特殊境遇家庭");
         }
 
@@ -111,7 +110,7 @@ namespace CollegeExamFreeReport108
 
         private void ReportBuilding(object sender, RunWorkerCompletedEventArgs e)
         {
-            MotherForm.SetStatusBarMessage(Global.ReportName + " 產生完成");
+            MotherForm.SetStatusBarMessage(Global.ReportName_Completely + " 產生完成");
 
             EnableForm(true);
             Document doc = (Document)e.Result;
@@ -129,7 +128,7 @@ namespace CollegeExamFreeReport108
                     docList.Add(dc);
                 }
 
-                Update_ePaper up = new Update_ePaper(docList, "超額比序項目積分證明單", PrefixStudent.系統編號);
+                Update_ePaper up = new Update_ePaper(docList, Global.ReportName_Completely, PrefixStudent.系統編號);
                 if (up.ShowDialog() == System.Windows.Forms.DialogResult.Yes)
                 {
                     MsgBox.Show("電子報表已上傳!!");
@@ -141,7 +140,7 @@ namespace CollegeExamFreeReport108
             }
             SaveFileDialog sd = new SaveFileDialog();
             sd.Title = "另存新檔";
-            sd.FileName = Global.ReportName + ".doc";
+            sd.FileName = Global.ReportName_Completely + ".doc";
             sd.Filter = "Word檔案 (*.doc)|*.doc|所有檔案 (*.*)|*.*";
             if (sd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -275,27 +274,6 @@ namespace CollegeExamFreeReport108
             }
 
             _BW.ReportProgress(50);
-            ////獎懲紀錄
-            //List<AutoSummaryRecord> records = AutoSummary.Select(students, null);
-            //foreach (AutoSummaryRecord record in records)
-            //{
-            //    string id = record.RefStudentID;
-            //    if (studentDic.ContainsKey(id))
-            //    {
-            //        studentDic[id].MeritA += record.MeritA;
-            //        studentDic[id].MeritB += record.MeritB;
-            //        studentDic[id].MeritC += record.MeritC;
-            //        studentDic[id].DemeritA += record.DemeritA;
-            //        studentDic[id].DemeritB += record.DemeritB;
-            //        studentDic[id].DemeritC += record.DemeritC;
-            //    }
-            //}
-
-            // 2018/5/11 穎驊新增，自羿均那邊拿到他調整好　高中職免試入學抓取資料的SQL
-            // 提出其中　獎懲的部分稍作調整，作為新的五專免試入學學生獎懲資料抓取方式
-            // 其最大的特色是，可以設定截止時間、過濾銷過紀錄、自動加總非明細資料(轉學生適用)、
-            // 且無論該學期有無學習歷程，只要有計獎懲一律計算，不會因為該學期休學而不計算
-
             List<string> sidList = new List<string>();
 
             foreach (string sid in studentDic.Keys)
@@ -531,7 +509,7 @@ FROM
             //獎懲紀錄功過相抵
             foreach (StudentObj obj in studentDic.Values)
             {
-                obj.MeritDemeritTransfer();
+                obj.MeritDemeritTransfer_Completely();
             }
 
             _BW.ReportProgress(60);
@@ -658,8 +636,8 @@ FROM
             data.Columns.Add("心肺適能");
             data.Columns.Add("體適能");
             data.Columns.Add("健康與體育");
-            data.Columns.Add("藝術");
             data.Columns.Add("藝術與人文");
+            data.Columns.Add("藝術");
             data.Columns.Add("綜合活動");
             data.Columns.Add("科技");
             data.Columns.Add("均衡學習");
@@ -683,7 +661,7 @@ FROM
                 row["身分證字號"] = obj.IdNumber;
                 row["服務時數"] = obj.ServiceHours;
                 row["幹部紀錄"] = obj.CadreTimes;
-                row["服務學習"] = obj.ServiceHoursScore;
+                row["服務學習"] = obj.ServiceHours_Completely; //完全免試規則
                 row["處分紀錄"] = obj.HasDemeritAB ? "有" : "無";
 
                 // 功過相抵
@@ -715,7 +693,7 @@ FROM
                 row["藝術"] = dic.ContainsKey("藝術") ? dic["藝術"] : 0;
                 row["綜合活動"] = dic.ContainsKey("綜合活動") ? dic["綜合活動"] : 0;
                 row["科技"] = dic.ContainsKey("科技") ? dic["科技"] : 0;
-                row["均衡學習"] = obj.DomainItemScore;
+                row["均衡學習"] = obj.DomainItemScore_Completely;
 
                 string[] tags = CheckTagId(obj.TagIds);
                 row["對照身分"] = tags[0];
@@ -723,8 +701,9 @@ FROM
 
                 row["弱勢身分_總"] = row["弱勢身分"].ToString();
                 row["均衡學習_總"] = row["均衡學習"].ToString();
-                int score = obj.ServiceHoursScore + obj.MeritDemeritScore + obj.SportFitnessScore;
-                row["多元學習表現"] = (score > 16) ? 16 : score;
+                decimal score = obj.ServiceHoursScore_Priority;
+                //double score = obj.ServiceHoursScore_Priority;
+                row["多元學習表現"] = (score > 15) ? 15 : score;
                 data.Rows.Add(row);
 
                 count++;
@@ -750,7 +729,7 @@ FROM
             return xx.CompareTo(yy);
         }
 
-        private void buttonX1_Click(object sender, EventArgs e)
+        private void btnPrint_Click(object sender, EventArgs e)
         {
             ConfigureMaker();
 
@@ -770,7 +749,7 @@ FROM
             ConfigureMaker();
             SaveFileDialog sd = new SaveFileDialog();
             sd.Title = "另存新檔";
-            sd.FileName = Global.ReportName + "(範本).doc";
+            sd.FileName = Global.ReportName_Completely + "(範本).doc";
             sd.Filter = "Word檔案 (*.doc)|*.doc|所有檔案 (*.*)|*.*";
             if (sd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -790,10 +769,10 @@ FROM
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             //ConfigureMaker();
-            List<Configure> Configures = _A.Select<Configure>();
+            List<Configure_Completely> Configures = _A.Select<Configure_Completely>();
             _A.DeletedValues(Configures);
 
-            _Configure = new Configure();
+            _Configure = new Configure_Completely();
 
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Title = "上傳樣板";
@@ -817,7 +796,7 @@ FROM
         {
             if (MessageBox.Show("確認移除目前範本?", "ischool", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                List<Configure> Configures = _A.Select<Configure>();
+                List<Configure_Completely> Configures = _A.Select<Configure_Completely>();
 
                 if (Configures.Count > 0)
                     _A.DeletedValues(Configures);
@@ -828,7 +807,7 @@ FROM
 
         private void ConfigureMaker()
         {
-            List<Configure> Configures = _A.Select<Configure>();
+            List<Configure_Completely> Configures = _A.Select<Configure_Completely>();
 
             if (Configures.Count > 0)
             {
@@ -839,20 +818,8 @@ FROM
             }
             else
             {
-                _Configure = new Configure();
-                //TemplateSelecter selecter = new TemplateSelecter();
-                //selecter.ShowDialog();
-                //if (selecter.DialogResult == DialogResult.OK)
-                //{
-                //    _Configure.Template = new Document(new MemoryStream(Properties.Resources.Template_中區));
-                //}
-                //else
-                //{
-                //    _Configure.Template = new Document(new MemoryStream(Properties.Resources.Template_南區));
-                //}
-
-                // 2018/05/10 穎驊新增， 整理後，五專免試入學 績分比序格式相同 不再分區
-                _Configure.Template = new Document(new MemoryStream(Properties.Resources.Template_不分區));
+                _Configure = new Configure_Completely();
+                _Configure.Template = new Document(new MemoryStream(Properties.Resources.Template_完全_積分證明單));
 
                 _Configure.Encode();
                 _Configure.CheckUploadEpaper = chkUploadEPaper.Checked;
@@ -872,7 +839,7 @@ FROM
 
         private void EnableForm(bool enable)
         {
-            this.buttonX1.Enabled = enable;
+            this.btnPrint.Enabled = enable;
             this.linkLabel1.Enabled = enable;
             this.linkLabel2.Enabled = enable;
             this.linkLabel3.Enabled = enable;
@@ -942,8 +909,18 @@ FROM
             string[] str = new string[2];
             if (retVal.Count > 0)
             {
-                str[0] = string.Join("、", retVal);
-                str[1] = "2";
+                if (retVal.Contains("低收入戶"))
+                {
+                    str[0] = "低收入戶";
+                    str[1] = "3";
+                }
+                else
+                {
+                    str[0] = retVal[0];
+                    str[1] = "1.5";
+                }
+
+
             }
             else
             {
@@ -954,14 +931,9 @@ FROM
             return str;
         }
 
-        private void qaLb_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void btnExit_Click(object sender, EventArgs e)
         {
-            (new QAForm()).ShowDialog();
-        }
-
-        private void linkLabel5_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            (new LeagleForm()).ShowDialog();
+            this.Close();
         }
 
         private void SaveSetting()
@@ -1008,11 +980,11 @@ FROM
             }
 
             //讀取是否上傳電子報表設定檔
-            //List<Configure> _confList = _A.Select<Configure>();
+            List<Configure_Completely> _confList = _A.Select<Configure_Completely>();
 
-            //chkUploadEPaper.Checked = false;
-            //if (_confList.Count > 0)
-            //    chkUploadEPaper.Checked = _confList[0].CheckUploadEpaper;
+            chkUploadEPaper.Checked = false;
+            if (_confList.Count > 0)
+                chkUploadEPaper.Checked = _confList[0].CheckUploadEpaper;
 
         }
 
@@ -1025,7 +997,7 @@ FROM
         {
             SaveFileDialog sd = new SaveFileDialog();
             sd.Title = "另存新檔";
-            sd.FileName = Global.ReportName + "(合併欄位).doc";
+            sd.FileName = Global.ReportName_Completely + "(合併欄位).doc";
             sd.Filter = "Word檔案 (*.doc)|*.doc|所有檔案 (*.*)|*.*";
             if (sd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
