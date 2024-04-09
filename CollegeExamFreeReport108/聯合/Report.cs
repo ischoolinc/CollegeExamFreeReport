@@ -840,20 +840,7 @@ FROM
             else
             {
                 _Configure = new Configure();
-                //TemplateSelecter selecter = new TemplateSelecter();
-                //selecter.ShowDialog();
-                //if (selecter.DialogResult == DialogResult.OK)
-                //{
-                //    _Configure.Template = new Document(new MemoryStream(Properties.Resources.Template_中區));
-                //}
-                //else
-                //{
-                //    _Configure.Template = new Document(new MemoryStream(Properties.Resources.Template_南區));
-                //}
-
-                // 2018/05/10 穎驊新增， 整理後，五專免試入學 績分比序格式相同 不再分區
                 _Configure.Template = new Document(new MemoryStream(Properties.Resources.Template_不分區_聯合_積分證明單));
-
                 _Configure.Encode();
                 _Configure.CheckUploadEpaper = chkUploadEPaper.Checked;
                 _Configure.Save();
@@ -1003,11 +990,11 @@ FROM
             }
 
             //讀取是否上傳電子報表設定檔
-            //List<Configure> _confList = _A.Select<Configure>();
+            List<Configure> _confList = _A.Select<Configure>();
 
-            //chkUploadEPaper.Checked = false;
-            //if (_confList.Count > 0)
-            //    chkUploadEPaper.Checked = _confList[0].CheckUploadEpaper;
+            chkUploadEPaper.Checked = false;
+            if (_confList.Count > 0)
+                chkUploadEPaper.Checked = _confList[0].CheckUploadEpaper;
 
         }
 

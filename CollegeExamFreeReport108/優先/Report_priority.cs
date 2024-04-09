@@ -22,7 +22,7 @@ namespace CollegeExamFreeReport108
 {    
     public partial class Report_priority : BaseForm
     {
-        Configure_Completely _Configure;
+        Configure_priority _Configure;
         AccessHelper _A = new AccessHelper();
         QueryHelper _Q = new QueryHelper();
         BackgroundWorker _BW;
@@ -791,10 +791,10 @@ FROM
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             //ConfigureMaker();
-            List<Configure_Completely> Configures = _A.Select<Configure_Completely>();
+            List<Configure_priority> Configures = _A.Select<Configure_priority>();
             _A.DeletedValues(Configures);
 
-            _Configure = new Configure_Completely();
+            _Configure = new Configure_priority();
 
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Title = "上傳樣板";
@@ -818,7 +818,7 @@ FROM
         {
             if (MessageBox.Show("確認移除目前範本?", "ischool", MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
-                List<Configure_Completely> Configures = _A.Select<Configure_Completely>();
+                List<Configure_priority> Configures = _A.Select<Configure_priority>();
 
                 if (Configures.Count > 0)
                     _A.DeletedValues(Configures);
@@ -829,7 +829,7 @@ FROM
 
         private void ConfigureMaker()
         {
-            List<Configure_Completely> Configures = _A.Select<Configure_Completely>();
+            List<Configure_priority> Configures = _A.Select<Configure_priority>();
 
             if (Configures.Count > 0)
             {
@@ -840,21 +840,8 @@ FROM
             }
             else
             {
-                _Configure = new Configure_Completely();
-                //TemplateSelecter selecter = new TemplateSelecter();
-                //selecter.ShowDialog();
-                //if (selecter.DialogResult == DialogResult.OK)
-                //{
-                //    _Configure.Template = new Document(new MemoryStream(Properties.Resources.Template_中區));
-                //}
-                //else
-                //{
-                //    _Configure.Template = new Document(new MemoryStream(Properties.Resources.Template_南區));
-                //}
-
-                // 2018/05/13 穎驊新增，本報表 為 優先免試入學 規格略有不同
+                _Configure = new Configure_priority();
                 _Configure.Template = new Document(new MemoryStream(Properties.Resources.Template_優先_積分證明單));
-
                 _Configure.Encode();
                 _Configure.CheckUploadEpaper = chkUploadEPaper.Checked;
                 _Configure.Save();
@@ -1022,7 +1009,7 @@ FROM
             }
 
             //讀取是否上傳電子報表設定檔
-            List<Configure_Completely> _confList = _A.Select<Configure_Completely>();
+            List<Configure_priority> _confList = _A.Select<Configure_priority>();
 
             chkUploadEPaper.Checked = false;
             if (_confList.Count > 0)

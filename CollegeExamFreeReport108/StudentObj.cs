@@ -247,7 +247,7 @@ namespace CollegeExamFreeReport108
         /// 完全免試 服務學習: 每1小時0.5分，上限15分 (2024-8 Dylan)
         /// </summary>
         /// https://3.basecamp.com/4399967/buckets/15852426/todos/7221323792
-        public decimal ServiceHours_Completely
+        public decimal ServiceHoursScore_Completely
         {
             get
             {

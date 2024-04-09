@@ -1,3 +1,5 @@
+C:\MyJob_Desktop\Github\CollegeExamFreeReport108\CollegeExamFreeReport108\bin\Debug\CollegeExamFreeReport108.dll
+C:\MyJob_Desktop\Github\CollegeExamFreeReport108\CollegeExamFreeReport108\bin\Debug\CollegeExamFreeReport108.pdb
 C:\MyJob_Desktop\Github\CollegeExamFreeReport108\CollegeExamFreeReport108\obj\Debug\CollegeExamFreeReport108.csproj.AssemblyReference.cache
 C:\MyJob_Desktop\Github\CollegeExamFreeReport108\CollegeExamFreeReport108\obj\Debug\CollegeExamFreeReport108.LeagleForm_priority.resources
 C:\MyJob_Desktop\Github\CollegeExamFreeReport108\CollegeExamFreeReport108\obj\Debug\CollegeExamFreeReport108.LeagleForm.resources
@@ -12,5 +14,3 @@ C:\MyJob_Desktop\Github\CollegeExamFreeReport108\CollegeExamFreeReport108\obj\De
 C:\MyJob_Desktop\Github\CollegeExamFreeReport108\CollegeExamFreeReport108\obj\Debug\CollegeExamFreeReport108.csproj.CoreCompileInputs.cache
 C:\MyJob_Desktop\Github\CollegeExamFreeReport108\CollegeExamFreeReport108\obj\Debug\CollegeExamFreeReport108.dll
 C:\MyJob_Desktop\Github\CollegeExamFreeReport108\CollegeExamFreeReport108\obj\Debug\CollegeExamFreeReport108.pdb
-C:\MyJob_Desktop\Github\CollegeExamFreeReport108\CollegeExamFreeReport108\bin\Debug\CollegeExamFreeReport108.dll
-C:\MyJob_Desktop\Github\CollegeExamFreeReport108\CollegeExamFreeReport108\bin\Debug\CollegeExamFreeReport108.pdb

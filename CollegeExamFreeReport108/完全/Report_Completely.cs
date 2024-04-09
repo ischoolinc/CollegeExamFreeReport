@@ -661,7 +661,7 @@ FROM
                 row["身分證字號"] = obj.IdNumber;
                 row["服務時數"] = obj.ServiceHours;
                 row["幹部紀錄"] = obj.CadreTimes;
-                row["服務學習"] = obj.ServiceHours_Completely; //完全免試規則
+                row["服務學習"] = obj.ServiceHoursScore_Completely; //完全免試規則
                 row["處分紀錄"] = obj.HasDemeritAB ? "有" : "無";
 
                 // 功過相抵
@@ -701,7 +701,7 @@ FROM
 
                 row["弱勢身分_總"] = row["弱勢身分"].ToString();
                 row["均衡學習_總"] = row["均衡學習"].ToString();
-                decimal score = obj.ServiceHoursScore_Priority;
+                decimal score = obj.ServiceHoursScore_Completely;
                 //double score = obj.ServiceHoursScore_Priority;
                 row["多元學習表現"] = (score > 15) ? 15 : score;
                 data.Rows.Add(row);
@@ -820,7 +820,6 @@ FROM
             {
                 _Configure = new Configure_Completely();
                 _Configure.Template = new Document(new MemoryStream(Properties.Resources.Template_完全_積分證明單));
-
                 _Configure.Encode();
                 _Configure.CheckUploadEpaper = chkUploadEPaper.Checked;
                 _Configure.Save();
