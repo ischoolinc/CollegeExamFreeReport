@@ -15,7 +15,6 @@ namespace CollegeExamFreeReport108
         /// </summary>
         public decimal ServiceHours;
 
-        public int CadreTimes;
         //原始獎懲紀錄
         public int MeritA, MeritB, MeritC, DemeritA, DemeritB, DemeritC;
         //功過相抵後獎懲紀錄
@@ -251,11 +250,28 @@ namespace CollegeExamFreeReport108
         {
             get
             {
-                decimal score = (int)(ServiceHours) *0.5m;
-                score += CadreTimes * 2;
+                decimal score = (int)(ServiceHours) *0.5m; //服務學習
 
                 if (score > 15)
                     score = 15;
+
+                return score;
+            }
+        }
+
+        /// <summary>
+        /// 幹部學期數
+        /// </summary>
+        public int CadreTimes;
+
+        /// <summary>
+        /// 幹部積分
+        /// </summary>
+        public decimal CadreTimes_Completely
+        {
+            get
+            {
+                decimal score = CadreTimes * 2; //幹部紀錄
 
                 return score;
             }

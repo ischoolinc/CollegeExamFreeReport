@@ -271,7 +271,14 @@ namespace CollegeExamFreeReport108
                         }
                     }
                 }
+
+                //幹部學期數
+
+
+
+
             }
+
 
             _BW.ReportProgress(50);
             List<string> sidList = new List<string>();
@@ -619,9 +626,6 @@ FROM
             data.Columns.Add("座號");
             data.Columns.Add("學號");
             data.Columns.Add("身分證字號");
-            data.Columns.Add("服務時數");
-            data.Columns.Add("幹部紀錄");
-            data.Columns.Add("服務學習");
             data.Columns.Add("處分紀錄");
             data.Columns.Add("嘉獎");
             data.Columns.Add("小功");
@@ -647,6 +651,12 @@ FROM
             data.Columns.Add("均衡學習_總");
             data.Columns.Add("多元學習表現");
 
+            data.Columns.Add("服務時數");
+            data.Columns.Add("服務學習");
+
+            data.Columns.Add("幹部紀錄");
+            data.Columns.Add("幹部積分");
+
             foreach (StudentObj obj in list)
             {
                 DataRow row = data.NewRow();
@@ -659,10 +669,13 @@ FROM
                 row["座號"] = obj.SeatNo;
                 row["學號"] = obj.StudentNumber;
                 row["身分證字號"] = obj.IdNumber;
-                row["服務時數"] = obj.ServiceHours;
-                row["幹部紀錄"] = obj.CadreTimes;
-                row["服務學習"] = obj.ServiceHoursScore_Completely; //完全免試規則
                 row["處分紀錄"] = obj.HasDemeritAB ? "有" : "無";
+
+                row["服務時數"] = obj.ServiceHours;
+                row["服務學習"] = obj.ServiceHoursScore_Completely; //完全免試規則
+
+                row["幹部紀錄"] = obj.CadreTimes;
+                row["幹部積分"] = obj.CadreTimes_Completely;
 
                 // 功過相抵
                 //row["嘉獎"] = obj.MC;
@@ -701,8 +714,9 @@ FROM
 
                 row["弱勢身分_總"] = row["弱勢身分"].ToString();
                 row["均衡學習_總"] = row["均衡學習"].ToString();
+
                 decimal score = obj.ServiceHoursScore_Completely;
-                //double score = obj.ServiceHoursScore_Priority;
+                score += obj.CadreTimes_Completely;
                 row["多元學習表現"] = (score > 15) ? 15 : score;
                 data.Rows.Add(row);
 
