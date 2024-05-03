@@ -616,7 +616,7 @@ FROM
                             if (!studentDic[id].DomainScores[domain].ContainsKey(grade))
                             {
                                 decimal value = score.Score.HasValue ? score.Score.Value : 0;
-                                studentDic[id].DomainScores[domain].Add(grade, value);
+                                studentDic[id].DomainScores[domain].Add(grade, (int)Math.Floor(value));
                             }
                         }
                     }

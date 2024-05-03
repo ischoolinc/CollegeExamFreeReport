@@ -226,7 +226,7 @@ namespace CollegeExamFreeReport108
         /// 優先服務學習: 每1小時0.25分，上限15分，old:每1小時0.5分，上限15分。
         /// </summary>
         /// https://3.basecamp.com/4399967/buckets/15852426/todos/4417454620
-        public decimal ServiceHoursScore_Priority
+        public int ServiceHoursScore_Priority
         {
             get
             {
@@ -238,7 +238,7 @@ namespace CollegeExamFreeReport108
                 if (score > 15)
                     score = 15;
 
-                return score;
+                return (int)Math.Floor(score);
             }
         }
 
@@ -246,7 +246,7 @@ namespace CollegeExamFreeReport108
         /// 完全免試 服務學習: 每1小時0.5分，上限15分 (2024-8 Dylan)
         /// </summary>
         /// https://3.basecamp.com/4399967/buckets/15852426/todos/7221323792
-        public decimal ServiceHoursScore_Completely
+        public int ServiceHoursScore_Completely
         {
             get
             {
@@ -255,7 +255,7 @@ namespace CollegeExamFreeReport108
                 if (score > 15)
                     score = 15;
 
-                return score;
+                return (int)Math.Floor(score);
             }
         }
 
