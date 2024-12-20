@@ -683,7 +683,7 @@ FROM
                 row["身分證字號"] = obj.IdNumber;
                 row["服務時數"] = obj.ServiceHours;
                 row["幹部紀錄"] = obj.CadreTimes;
-                row["服務學習"] = obj.ServiceHoursScore_Priority;
+                row["服務學習"] = Math.Round(obj.ServiceHoursScore_Priority, 2); //優先免試
                 row["處分紀錄"] = obj.HasDemeritAB ? "有" : "無";
 
                 // 功過相抵
@@ -723,7 +723,8 @@ FROM
 
                 row["弱勢身分_總"] = row["弱勢身分"].ToString();
                 row["均衡學習_總"] = row["均衡學習"].ToString();
-                decimal score = obj.ServiceHoursScore_Priority;
+
+                decimal score = obj.ServiceHoursScore_Priority; //優先免試
                 //double score = obj.ServiceHoursScore_Priority;
                 row["多元學習表現"] = (score > 15) ? 15 : score;
                 data.Rows.Add(row);             

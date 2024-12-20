@@ -672,7 +672,7 @@ FROM
                 row["處分紀錄"] = obj.HasDemeritAB ? "有" : "無";
 
                 row["服務時數"] = obj.ServiceHours;
-                row["服務學習"] = obj.ServiceHoursScore_Completely; //完全免試規則
+                row["服務學習"] = Math.Round(obj.ServiceHoursScore_Completely, 2); //完全免試規則
 
                 row["幹部紀錄"] = obj.CadreTimes;
                 row["幹部積分"] = obj.CadreTimes_Completely;
