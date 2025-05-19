@@ -52,7 +52,10 @@ namespace CollegeExamFreeReport108
                 if (count > 0)
                     domainAverageScores[domain] /= count;
 
-                domainAverageScores[domain] = Math.Round(domainAverageScores[domain], 2, MidpointRounding.AwayFromZero);
+                //domainAverageScores[domain] = Math.Round(domainAverageScores[domain], 2, MidpointRounding.AwayFromZero);
+
+                // 改成無條件捨去到整數位
+                domainAverageScores[domain] = Math.Floor(domainAverageScores[domain]);
             }
 
             return domainAverageScores;
