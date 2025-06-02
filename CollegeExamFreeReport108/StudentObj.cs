@@ -20,7 +20,7 @@ namespace CollegeExamFreeReport108
         //功過相抵後獎懲紀錄
         public int MA, MB, MC, DA, DB, DC;
         //體適能常模
-        public string sit_and_reach_degree, standing_long_jump_degree, sit_up_degree, cardiorespiratory_degree;
+        public string sit_and_reach_degree, standing_long_jump_degree, sit_up_degree, cardiorespiratory_degree, curl_degree,pacer_degree;
 
         public Dictionary<string, Dictionary<string, decimal>> DomainScores;
         private Dictionary<string, decimal> domainAverageScores;
@@ -341,22 +341,45 @@ namespace CollegeExamFreeReport108
                 {
                     score += 2;
                 }
-                //sit_up_degree
+                ////sit_up_degree
+                //if (sit_up_degree == "金牌" || sit_up_degree == "銀牌" || sit_up_degree == "銅牌" || sit_up_degree == "中等")
+                //{
+                //    score += 2;
+                //}
+
+                // 仰臥起坐 + 仰臥捲腹合併
+                int situpScore = 0;
                 if (sit_up_degree == "金牌" || sit_up_degree == "銀牌" || sit_up_degree == "銅牌" || sit_up_degree == "中等")
-                {
-                    score += 2;
-                }
-                //cardiorespiratory_degree
+                    situpScore += 2;
+                if (curl_degree == "金牌" || curl_degree == "銀牌" || curl_degree == "銅牌" || curl_degree == "中等")
+                    situpScore += 2;
+                score += situpScore;
+
+
+                ////cardiorespiratory_degree
+                //if (cardiorespiratory_degree == "金牌" || cardiorespiratory_degree == "銀牌" || cardiorespiratory_degree == "銅牌" || cardiorespiratory_degree == "中等")
+                //{
+                //    score += 2;
+                //}
+
+                // cardiorespiratory_degree + pacer_degree 合併計算
+                int cardioScore = 0;
                 if (cardiorespiratory_degree == "金牌" || cardiorespiratory_degree == "銀牌" || cardiorespiratory_degree == "銅牌" || cardiorespiratory_degree == "中等")
-                {
-                    score += 2;
-                }
+                    cardioScore += 2;
+                if (pacer_degree == "金牌" || pacer_degree == "銀牌" || pacer_degree == "銅牌" || pacer_degree == "中等")
+                    cardioScore += 2;
+                score += cardioScore;
+
 
                 if (score > 6)
                     score = 6;
 
                 // 免測處理
-                if (sit_and_reach_degree == "免測" || standing_long_jump_degree == "免測" || sit_up_degree == "免測" || cardiorespiratory_degree == "免測")
+                //if (sit_and_reach_degree == "免測" || standing_long_jump_degree == "免測" || sit_up_degree == "免測" || cardiorespiratory_degree == "免測")
+                //{
+                //    score = 6;
+                //}
+                if (sit_and_reach_degree == "免測" || standing_long_jump_degree == "免測" || sit_up_degree == "免測" || cardiorespiratory_degree == "免測" || curl_degree == "免測" || pacer_degree == "免測")
                 {
                     score = 6;
                 }
@@ -377,19 +400,21 @@ namespace CollegeExamFreeReport108
                 case "立定跳遠":
                     value = standing_long_jump_degree;
                     break;
-
+                
                 case "仰臥起坐":
-                    value = sit_up_degree;
-                    break;
+                    // 以 sit_up_degree 優先，若為空則用 curl_degree
+                    value = !string.IsNullOrWhiteSpace(sit_up_degree) ? sit_up_degree : curl_degree;
+                    break;                
 
                 case "心肺適能":
-                    value = cardiorespiratory_degree;
+                    value = !string.IsNullOrWhiteSpace(cardiorespiratory_degree) ? cardiorespiratory_degree : pacer_degree;
                     break;
 
                 default:
                     value = "";
                     break;
             }
+            System.Diagnostics.Debug.WriteLine($"CheckScore({str}) = '{value}'");
 
             if (value == "金牌" || value == "銀牌" || value == "銅牌" || value == "中等" || value=="免測")
             {
@@ -548,6 +573,8 @@ namespace CollegeExamFreeReport108
             standing_long_jump_degree = "";
             sit_up_degree = "";
             cardiorespiratory_degree = "";
+            curl_degree = "";
+            pacer_degree = "";
             DomainScores = new Dictionary<string, Dictionary<string, decimal>>();
             domainAverageScores = new Dictionary<string, decimal>();
             TagIds = new List<string>();

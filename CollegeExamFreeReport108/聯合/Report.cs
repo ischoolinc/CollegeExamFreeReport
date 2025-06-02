@@ -540,7 +540,7 @@ FROM
             dt = _Q.Select("SELECT name FROM _udt_table where name='ischool_student_fitness'");
             if (dt.Rows.Count > 0)
             {
-                dt = _Q.Select("SELECT ref_student_id,sit_and_reach_degree, standing_long_jump_degree, sit_up_degree, cardiorespiratory_degree FROM $ischool_student_fitness WHERE ref_student_id IN ('" + ids + "')");
+                dt = _Q.Select("SELECT ref_student_id,sit_and_reach_degree, standing_long_jump_degree, sit_up_degree, cardiorespiratory_degree,curl_degree,pacer_degree FROM $ischool_student_fitness WHERE ref_student_id IN ('" + ids + "')");
                 foreach (DataRow row in dt.Rows)
                 {
                     string id = row["ref_student_id"].ToString();
@@ -553,6 +553,9 @@ FROM
                             studentDic[id].sit_up_degree = row["sit_up_degree"].ToString();
                             studentDic[id].standing_long_jump_degree = row["standing_long_jump_degree"].ToString();
                             studentDic[id].cardiorespiratory_degree = row["cardiorespiratory_degree"].ToString();
+                            studentDic[id].curl_degree = row["curl_degree"].ToString();
+                            studentDic[id].pacer_degree = row["pacer_degree"].ToString();
+
                         }
                     }
                 }
@@ -616,7 +619,7 @@ FROM
                             if (!studentDic[id].DomainScores[domain].ContainsKey(grade))
                             {
                                 decimal value = score.Score.HasValue ? score.Score.Value : 0;
-                                studentDic[id].DomainScores[domain].Add(grade,value);
+                                studentDic[id].DomainScores[domain].Add(grade, value);
                             }
                         }
                     }
@@ -873,6 +876,10 @@ FROM
             string sit_up_degree = row["sit_up_degree"].ToString();
             string cardiorespiratory_degree = row["cardiorespiratory_degree"].ToString();
 
+            string curl_degree = row.Table.Columns.Contains("curl_degree") ? row["curl_degree"].ToString() : "";
+            string pacer_degree = row.Table.Columns.Contains("pacer_degree") ? row["pacer_degree"].ToString() : "";
+
+
             int score = 0;
 
             //sit_and_reach_degree
@@ -890,6 +897,11 @@ FROM
             {
                 score += 2;
             }
+
+            // 仰臥捲腹
+            if (curl_degree == "金牌" || curl_degree == "銀牌" || curl_degree == "銅牌" || curl_degree == "中等")
+                score += 2;
+
             //cardiorespiratory_degree
             if (cardiorespiratory_degree == "金牌" || cardiorespiratory_degree == "銀牌" || cardiorespiratory_degree == "銅牌" || cardiorespiratory_degree == "中等")
             {
@@ -898,6 +910,10 @@ FROM
 
             //if (score > 6)
             //    score = 6;
+
+            // 漸速耐力跑
+            if (pacer_degree == "金牌" || pacer_degree == "銀牌" || pacer_degree == "銅牌" || pacer_degree == "中等")
+                score += 2;
 
             // 免測處理
             if (sit_and_reach_degree == "免測" || standing_long_jump_degree == "免測" || sit_up_degree == "免測" || cardiorespiratory_degree == "免測")
